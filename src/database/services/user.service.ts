@@ -1,18 +1,19 @@
-import { IUser } from '../interfaces/user.interface';
-import UsersModel from '../models/users.model';
+import ErrorHandler from '../helper/ErrorHelper';
+import { Clubs, Users } from '../models/index';
 
 export default class UserService {
-  // private getAllClubs = async (allUsers: UsersModel[]) => {
-  //   const usersWithClub = []
-  //   Promise.all(allUsers.map( async (user: any) => {
-  //     const { dataValues } = user;
-  //     const clubs = await ClubsModel.findByPk
-  //   }))
-  // }
-
-  public getAll = async (): Promise<any> => {
-    const allUsers: UsersModel[] = await UsersModel.findAll();
-    // await this.getAllClubs(allUsers);
+  public getAll = async (): Promise<Users[]> => {
+    const allUsers = await Users.findAll({
+      include: { model: Clubs, as: 'club', include: ['hobbies'] },
+    });
     return allUsers;
   };
+
+  public getUser = async (id: string): Promise<Users> => {
+    const searchedUser = await Users.findByPk(id, {
+      include: { model: Clubs, as: 'club', include: ['hobbies'] }
+    });
+    if (!searchedUser) throw new ErrorHandler('User not found', 404);
+    return searchedUser;
+  }
 }

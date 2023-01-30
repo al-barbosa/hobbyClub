@@ -1,4 +1,4 @@
-import IClub from "./club.interface";
+import { IClubUsersHobbies } from "./club.interface";
 
 export interface IUser {
   id: number,
@@ -9,6 +9,6 @@ export interface IUser {
   updatedAt?: string,
 }
 
-export interface IUserClub extends IUser {
-  clubs: IClub[],
+export interface IUserComplete extends IUser {
+  club: IClubUsersHobbies[],
 }

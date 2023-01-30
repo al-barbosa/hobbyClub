@@ -8,11 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const users_model_1 = __importDefault(require("../models/users.model"));
+const index_1 = require("../models/index");
 class UserService {
     constructor() {
         // private getAllClubs = async (allUsers: UsersModel[]) => {
@@ -23,7 +20,7 @@ class UserService {
         //   }))
         // }
         this.getAll = () => __awaiter(this, void 0, void 0, function* () {
-            const allUsers = yield users_model_1.default.findAll();
+            const allUsers = yield index_1.Users.findAll();
             // await this.getAllClubs(allUsers);
             return allUsers;
         });
