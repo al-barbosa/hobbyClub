@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import IError from '../interfaces/error.interface';
+import { IUser } from '../interfaces/user.interface';
 import UserService from '../services/user.service';
 
 export default class UserController {
@@ -7,7 +8,9 @@ export default class UserController {
 
   public getAll = async (_req: Request, res: Response): Promise<Response> => {
     const allUsers = await this.userService.getAll();
-    return res.status(200).json(allUsers);
+    return res
+      .status(200)
+      .json(allUsers);
   };
 
   public getUser = async (req: Request, res: Response): Promise<Response> => {
@@ -21,4 +24,31 @@ export default class UserController {
         .json({ message });
     }
   };
+
+  public login = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const token = await this.userService.login(req.body);
+      return res.status(200).json({ token });
+    } catch (e) {
+      const { code, message } = e as IError;
+      return res
+        .status(code)
+        .json({ message });
+    }
+  };
+
+  public createUser = async (req: Request, res: Response) => {
+    try {
+      const creeatedUserInfo: IUser = await this.userService.createUser(req.body);
+      const { username } = creeatedUserInfo;
+      return res
+        .status(200)
+        .json({ message: `User ${username} was successfully created` });
+    } catch (e) {
+      const { code, message } = e as IError;
+      return res
+        .status(code)
+        .json({ message });
+    }
+  }
 }

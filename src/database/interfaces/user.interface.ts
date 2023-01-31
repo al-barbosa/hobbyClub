@@ -1,7 +1,7 @@
 import { IClubUsersHobbies } from "./club.interface";
 
 export interface IUser {
-  id: number,
+  id?: number,
   username: string,
   email: string,
   password: string,
@@ -11,4 +11,9 @@ export interface IUser {
 
 export interface IUserComplete extends IUser {
   club: IClubUsersHobbies[],
+}
+
+export interface IUserLogin {
+  email: string,
+  password: string,
 }

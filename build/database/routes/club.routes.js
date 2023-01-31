@@ -23,11 +23,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
-const user_controllers_1 = __importDefault(require("../controllers/user.controllers"));
-const userControllers = new user_controllers_1.default();
-const userRoute = express.Router();
-userRoute.get('/', userControllers.getAll);
-userRoute.get('/:id', userControllers.getUser);
-userRoute.post('/', userControllers.createUser);
-userRoute.post('/login', userControllers.login);
-exports.default = userRoute;
+const club_controllers_1 = __importDefault(require("../controllers/club.controllers"));
+const clubController = new club_controllers_1.default();
+const clubRoute = express.Router();
+clubRoute.get('/', clubController.getAll);
+exports.default = clubRoute;

@@ -12,46 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_service_1 = __importDefault(require("../services/user.service"));
-class UserController {
+const club_service_1 = __importDefault(require("../services/club.service"));
+class ClubController {
     constructor() {
-        this.userService = new user_service_1.default();
+        this.clubService = new club_service_1.default();
         this.getAll = (_req, res) => __awaiter(this, void 0, void 0, function* () {
-            const allUsers = yield this.userService.getAll();
+            const allUsers = yield this.clubService.getAll();
             return res
                 .status(200)
                 .json(allUsers);
         });
-        this.getUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.getClub = (_req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const searchedUser = yield this.userService.getUser(req.params.id);
-                return res.status(200).json(searchedUser);
-            }
-            catch (e) {
-                const { code, message } = e;
-                return res
-                    .status(code)
-                    .json({ message });
-            }
-        });
-        this.login = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                const token = yield this.userService.login(req.body);
-                return res.status(200).json({ token });
-            }
-            catch (e) {
-                const { code, message } = e;
-                return res
-                    .status(code)
-                    .json({ message });
-            }
-        });
-        this.createUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                const creeatedUserInfo = yield this.userService.createUser(req.body);
+                const searchedClub = yield this.clubService.getAll();
                 return res
                     .status(200)
-                    .json({ creeatedUserInfo });
+                    .json(searchedClub);
             }
             catch (e) {
                 const { code, message } = e;
@@ -62,4 +38,4 @@ class UserController {
         });
     }
 }
-exports.default = UserController;
+exports.default = ClubController;

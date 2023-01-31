@@ -7,13 +7,17 @@ export default class ClubController {
 
   public getAll = async (_req: Request, res: Response): Promise<Response> => {
     const allUsers = await this.clubService.getAll();
-    return res.status(200).json(allUsers);
+    return res
+      .status(200)
+      .json(allUsers);
   };
 
   public getClub = async (_req: Request, res: Response): Promise<Response> => {
     try{
       const searchedClub = await this.clubService.getAll();
-      return res.status(200).json(searchedClub);
+      return res
+        .status(200)
+        .json(searchedClub);
     } catch (e) {
       const { code, message } = e as IError;
       return res

@@ -18,16 +18,27 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = __importStar(require("express"));
-const user_controllers_1 = __importDefault(require("../controllers/user.controllers"));
-const userControllers = new user_controllers_1.default();
-const userRoute = express.Router();
-userRoute.get('/', userControllers.getAll);
-userRoute.get('/:id', userControllers.getUser);
-userRoute.post('/', userControllers.createUser);
-userRoute.post('/login', userControllers.login);
-exports.default = userRoute;
+const jwt = __importStar(require("jsonwebtoken"));
+const secret = process.env.JWT_SECRET;
+const jwtConfig = {
+    algorithm: 'HS256',
+    expiresIn: '1d',
+};
+class TokenHandler {
+    constructor() {
+        this.createToken = (user) => jwt.sign(Object.assign({}, user), secret, jwtConfig);
+        this.validateToken = (req, res, next) => {
+            const { authorization: token } = req.headers;
+            if (!token)
+                return res.status(404).json({ message: 'Token not found' });
+            jwt.verify(token, secret, (err, user) => {
+                if (err)
+                    return res.status(404).json({ message: 'Invalid token' });
+                req.body = Object.assign(Object.assign({}, req.body), { user });
+                next();
+            });
+        };
+    }
+}
+exports.default = TokenHandler;

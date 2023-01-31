@@ -123,10 +123,10 @@ UsersClubs.init({
     modelName: 'usersClubs',
     timestamps: false,
 });
-Clubs.belongsTo(Users, { foreignKey: 'adminId', as: 'admin_of' });
-Users.hasMany(Clubs, { foreignKey: 'adminId', as: 'admin' });
+Clubs.belongsTo(Users, { foreignKey: 'adminId', as: 'admin' });
+Users.hasMany(Clubs, { foreignKey: 'adminId', as: 'admin_of' });
 Hobbies.belongsTo(Clubs, { foreignKey: 'clubId', as: 'club' });
-Clubs.hasMany(Hobbies, { foreignKey: 'clubId', as: 'oldHobbies' });
+Clubs.hasMany(Hobbies, { foreignKey: 'clubId', as: 'hobbies' });
 Users.belongsToMany(Clubs, {
     through: UsersClubs,
     foreignKey: 'clubId',
