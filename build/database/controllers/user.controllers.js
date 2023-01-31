@@ -49,9 +49,10 @@ class UserController {
         this.createUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const creeatedUserInfo = yield this.userService.createUser(req.body);
+                const { username } = creeatedUserInfo;
                 return res
                     .status(200)
-                    .json({ creeatedUserInfo });
+                    .json({ message: `User ${username} was successfully created` });
             }
             catch (e) {
                 const { code, message } = e;

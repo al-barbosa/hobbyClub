@@ -3,10 +3,12 @@ import { Clubs, Users } from '../models/index';
 import * as bcrypt from 'bcryptjs';
 import { IUser, IUserLogin } from '../interfaces/user.interface';
 import TokenHandler from '../helper/TokenHelper';
+import UserValidation from '../helper/UserValidation';
+import { ValidationResult } from 'joi';
 
 export default class UserService {
   tokenHandler = new TokenHandler();
-
+  userValidaton = new UserValidation();
   public getAll = async (): Promise<Users[]> => {
     const allUsers = await Users.findAll({
       include: { model: Clubs, as: 'club', include: ['hobbies'] },
@@ -23,6 +25,9 @@ export default class UserService {
   }
 
   public login = async (loginInfo: IUserLogin): Promise<string> => {
+    const error: ValidationResult = this.userValidaton.validateLogIn(loginInfo)
+    if (error.error?.message) throw new ErrorHandler(error.error?.message, 404);
+
     const { email, password } = loginInfo;
 
     const userInfo = await Users.findOne( { where: { email }, raw: true }) as IUser;
@@ -37,6 +42,9 @@ export default class UserService {
   }
 
   public createUser = async (userInfo: IUser): Promise<any> => {{
+    const error: ValidationResult = this.userValidaton.validateSignUp(userInfo)
+    if (error.error?.message) throw new ErrorHandler(error.error?.message, 404);
+
     const { email, password, username} = userInfo;
 
     const checkEmail = await Users.findOne( { where: { email } }) as IUser;
