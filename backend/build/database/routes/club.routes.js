@@ -24,11 +24,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
 const club_controllers_1 = __importDefault(require("../controllers/club.controllers"));
+const TokenHelper_1 = __importDefault(require("../helper/TokenHelper"));
 const clubController = new club_controllers_1.default();
 const clubRoute = express.Router();
+const tokenHandler = new TokenHelper_1.default();
 clubRoute.get('/', clubController.getAll);
-clubRoute.post('/', clubController.createClub);
+clubRoute.post('/', tokenHandler.validateToken, clubController.createClub);
 clubRoute.get('/:id', clubController.getClub);
-clubRoute.post('/:id', clubController.createHobby);
-clubRoute.patch('/:id/:hobby', clubController.finishHobby);
+clubRoute.post('/:id', tokenHandler.validateToken, clubController.createHobby);
+clubRoute.patch('/:id/:hobby', tokenHandler.validateToken, clubController.finishHobby);
 exports.default = clubRoute;
