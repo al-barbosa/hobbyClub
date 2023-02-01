@@ -55,9 +55,9 @@ export default class ClubController {
   };
 
   public finishHobby = async (req: Request, res: Response): Promise<Response> => {
-    const finishedHobby = await this.clubService.finishHobbie(req.params.id, req.params.hobby);
+    await this.clubService.finishHobbie(req.params.id, req.params.hobby);
     return res
         .status(200)
-        .json(finishedHobby);
+        .json({ message: 'Hobby finished' });
   }
 }

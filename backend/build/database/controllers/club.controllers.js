@@ -35,6 +35,7 @@ class ClubController {
                     .status(code)
                     .json({ message });
             }
+            ;
         });
         this.createClub = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
@@ -49,6 +50,28 @@ class ClubController {
                     .status(code)
                     .json({ message });
             }
+            ;
+        });
+        this.createHobby = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const newHobby = yield this.clubService.createHobbie(req.body, req.params.id);
+                return res
+                    .status(200)
+                    .json(newHobby);
+            }
+            catch (e) {
+                const { code, message } = e;
+                return res
+                    .status(code)
+                    .json({ message });
+            }
+            ;
+        });
+        this.finishHobby = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            yield this.clubService.finishHobbie(req.params.id, req.params.hobby);
+            return res
+                .status(200)
+                .json({ message: 'Hobby finished' });
         });
     }
 }

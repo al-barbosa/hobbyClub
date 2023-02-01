@@ -51,8 +51,6 @@ export default class ClubService {
   }
 
   public finishHobbie = async (clubId: string, hobbyId: string) => {
-    console.log(hobbyId, clubId)
     const finishedHobby = await Hobbies.update({ finished: true }, { where: { id: hobbyId, clubId } });
-    console.log(finishedHobby);
   }
 }

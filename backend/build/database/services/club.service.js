@@ -15,9 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ClubValidation_1 = __importDefault(require("../helper/ClubValidation"));
 const ErrorHelper_1 = __importDefault(require("../helper/ErrorHelper"));
 const models_1 = require("../models");
+const Hobbyalidation_1 = __importDefault(require("../helper/Hobbyalidation"));
 class ClubService {
     constructor() {
         this.clubValidation = new ClubValidation_1.default();
+        this.hobbyValidation = new Hobbyalidation_1.default();
         this.getAll = () => __awaiter(this, void 0, void 0, function* () {
             const allClubs = yield models_1.Clubs.findAll({
                 include: [{ model: models_1.Users, as: 'admin' },
@@ -42,15 +44,25 @@ class ClubService {
             if ((_a = error.error) === null || _a === void 0 ? void 0 : _a.message)
                 throw new ErrorHelper_1.default((_b = error.error) === null || _b === void 0 ? void 0 : _b.message, 404);
             const { adminId, name } = clubInfo;
-            console.log(clubInfo);
             const newClub = yield models_1.Clubs.create({ name, adminId }, {
                 include: [{ model: models_1.Users, as: 'admin' },
                     { model: models_1.Hobbies, as: 'hobbies' },
                     { model: models_1.Users, as: 'user' }]
             });
             yield models_1.UsersClubs.create({ userId: adminId, clubId: newClub.id });
-            console.log(newClub.id);
             return newClub;
+        });
+        this.createHobbie = (nHobby, clubId) => __awaiter(this, void 0, void 0, function* () {
+            var _c, _d;
+            const error = this.hobbyValidation.validateNewHobby(nHobby);
+            if ((_c = error.error) === null || _c === void 0 ? void 0 : _c.message)
+                throw new ErrorHelper_1.default((_d = error.error) === null || _d === void 0 ? void 0 : _d.message, 404);
+            const { name, type } = nHobby;
+            const createdHobby = yield models_1.Hobbies.create({ name, type, finished: false, clubId });
+            return createdHobby;
+        });
+        this.finishHobbie = (clubId, hobbyId) => __awaiter(this, void 0, void 0, function* () {
+            const finishedHobby = yield models_1.Hobbies.update({ finished: true }, { where: { id: hobbyId, clubId } });
         });
     }
 }
