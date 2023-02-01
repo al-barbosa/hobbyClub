@@ -48,11 +48,24 @@ class UserController {
         });
         this.createUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const creeatedUserInfo = yield this.userService.createUser(req.body);
-                const { username } = creeatedUserInfo;
+                const token = yield this.userService.createUser(req.body);
                 return res
                     .status(200)
-                    .json({ message: `User ${username} was successfully created` });
+                    .json({ token });
+            }
+            catch (e) {
+                const { code, message } = e;
+                return res
+                    .status(code)
+                    .json({ message });
+            }
+        });
+        this.joinClub = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.userService.joinClub(req.params.id, req.params.club);
+                return res
+                    .status(200)
+                    .json({ message: `User ${req.params.id} joined club ${req.params.club}` });
             }
             catch (e) {
                 const { code, message } = e;

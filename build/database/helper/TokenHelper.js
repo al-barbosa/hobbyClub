@@ -18,8 +18,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = __importStar(require("jsonwebtoken"));
+const ErrorHelper_1 = __importDefault(require("./ErrorHelper"));
 const secret = process.env.JWT_SECRET;
 const jwtConfig = {
     algorithm: 'HS256',
@@ -31,11 +35,12 @@ class TokenHandler {
         this.validateToken = (req, res, next) => {
             const { authorization: token } = req.headers;
             if (!token)
-                return res.status(404).json({ message: 'Token not found' });
+                throw new ErrorHelper_1.default('Email already registered', 404);
+            // return res.status(404).json({ message: 'Token not found' });
             jwt.verify(token, secret, (err, user) => {
                 if (err)
-                    return res.status(404).json({ message: 'Invalid token' });
-                req.body = Object.assign(Object.assign({}, req.body), { user });
+                    throw new ErrorHelper_1.default('Email already registered', 404);
+                //  res.status(404).json({ message: 'Invalid token' });
                 next();
             });
         };

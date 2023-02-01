@@ -24,10 +24,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
 const user_controllers_1 = __importDefault(require("../controllers/user.controllers"));
+const TokenHelper_1 = __importDefault(require("../helper/TokenHelper"));
 const userControllers = new user_controllers_1.default();
+const tokenHandler = new TokenHelper_1.default();
 const userRoute = express.Router();
 userRoute.get('/', userControllers.getAll);
 userRoute.get('/:id', userControllers.getUser);
+userRoute.post('/:id/:club', tokenHandler.validateToken, userControllers.joinClub);
 userRoute.post('/', userControllers.createUser);
 userRoute.post('/login', userControllers.login);
 exports.default = userRoute;

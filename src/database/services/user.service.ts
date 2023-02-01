@@ -1,5 +1,5 @@
 import ErrorHandler from '../helper/ErrorHelper';
-import { Clubs, Users } from '../models/index';
+import { Clubs, Users, UsersClubs } from '../models/index';
 import * as bcrypt from 'bcryptjs';
 import { IUser, IUserLogin } from '../interfaces/user.interface';
 import TokenHandler from '../helper/TokenHelper';
@@ -9,7 +9,11 @@ import { ValidationResult } from 'joi';
 export default class UserService {
   tokenHandler = new TokenHandler();
   userValidaton = new UserValidation();
+
   public getAll = async (): Promise<Users[]> => {
+    // const allUsers = await Users.findAll({
+    //   include: { model: Clubs, as: 'club', include: ['hobbies'] },
+    // });
     const allUsers = await Users.findAll({
       include: { model: Clubs, as: 'club', include: ['hobbies'] },
     });
@@ -41,7 +45,7 @@ export default class UserService {
     return token;
   }
 
-  public createUser = async (userInfo: IUser): Promise<any> => {{
+  public createUser = async (userInfo: IUser): Promise<string> => {{
     const error: ValidationResult = this.userValidaton.validateSignUp(userInfo)
     if (error.error?.message) throw new ErrorHandler(error.error?.message, 404);
 
@@ -52,7 +56,16 @@ export default class UserService {
 
     var hashedPassword = bcrypt.hashSync(password, process.env.BCRYPT_SALT);
 
-    const createdUser = await Users.create({ email, password: hashedPassword, username })
-    return createdUser;
+
+    await Users.create({ email, password: hashedPassword, username }, { include: { model: Clubs, as: 'club', include: ['hobbies'] }});
+
+    
+    const token = this.tokenHandler.createToken({ email, password });
+
+    return token;
   }}
+
+  public joinClub = async (userId: string, clubId: string): Promise<void> => {
+    await UsersClubs.create({ userId, clubId }, { include: [Users, Clubs] });
+  }
 }

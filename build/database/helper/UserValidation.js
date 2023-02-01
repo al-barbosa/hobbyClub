@@ -8,7 +8,7 @@ class UserValidation {
     constructor() {
         this.validateSignUp = (body) => {
             return joi_1.default.object({
-                username: joi_1.default.string().required().min(4).messages({
+                username: joi_1.default.string().required().min(3).messages({
                     'string.empty': `Username cannot be an empty field`,
                     'string.min': `Username should have a minimum length of {#limit}`,
                 }),

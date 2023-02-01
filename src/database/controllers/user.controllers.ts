@@ -39,11 +39,24 @@ export default class UserController {
 
   public createUser = async (req: Request, res: Response) => {
     try {
-      const creeatedUserInfo: IUser = await this.userService.createUser(req.body);
-      const { username } = creeatedUserInfo;
+      const token: string = await this.userService.createUser(req.body);
       return res
         .status(200)
-        .json({ message: `User ${username} was successfully created` });
+        .json({ token });
+    } catch (e) {
+      const { code, message } = e as IError;
+      return res
+        .status(code)
+        .json({ message });
+    }
+  }
+
+  public joinClub = async (req: Request, res: Response) => {
+    try {
+      await this.userService.joinClub(req.params.id, req.params.club);
+      return res
+        .status(200)
+        .json({ message: `User ${req.params.id} joined club ${req.params.club}` });
     } catch (e) {
       const { code, message } = e as IError;
       return res

@@ -35,10 +35,15 @@ const ErrorHelper_1 = __importDefault(require("../helper/ErrorHelper"));
 const index_1 = require("../models/index");
 const bcrypt = __importStar(require("bcryptjs"));
 const TokenHelper_1 = __importDefault(require("../helper/TokenHelper"));
+const UserValidation_1 = __importDefault(require("../helper/UserValidation"));
 class UserService {
     constructor() {
         this.tokenHandler = new TokenHelper_1.default();
+        this.userValidaton = new UserValidation_1.default();
         this.getAll = () => __awaiter(this, void 0, void 0, function* () {
+            // const allUsers = await Users.findAll({
+            //   include: { model: Clubs, as: 'club', include: ['hobbies'] },
+            // });
             const allUsers = yield index_1.Users.findAll({
                 include: { model: index_1.Clubs, as: 'club', include: ['hobbies'] },
             });
@@ -48,11 +53,16 @@ class UserService {
             const searchedUser = yield index_1.Users.findByPk(id, {
                 include: { model: index_1.Clubs, as: 'club', include: ['hobbies'] }
             });
+            console.log(searchedUser);
             if (!searchedUser)
                 throw new ErrorHelper_1.default('User not found', 404);
             return searchedUser;
         });
         this.login = (loginInfo) => __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const error = this.userValidaton.validateLogIn(loginInfo);
+            if ((_a = error.error) === null || _a === void 0 ? void 0 : _a.message)
+                throw new ErrorHelper_1.default((_b = error.error) === null || _b === void 0 ? void 0 : _b.message, 404);
             const { email, password } = loginInfo;
             const userInfo = yield index_1.Users.findOne({ where: { email }, raw: true });
             if (!userInfo)
@@ -65,15 +75,23 @@ class UserService {
             return token;
         });
         this.createUser = (userInfo) => __awaiter(this, void 0, void 0, function* () {
+            var _c, _d;
             {
+                const error = this.userValidaton.validateSignUp(userInfo);
+                if ((_c = error.error) === null || _c === void 0 ? void 0 : _c.message)
+                    throw new ErrorHelper_1.default((_d = error.error) === null || _d === void 0 ? void 0 : _d.message, 404);
                 const { email, password, username } = userInfo;
                 const checkEmail = yield index_1.Users.findOne({ where: { email } });
                 if (checkEmail)
                     throw new ErrorHelper_1.default('Email already registered', 404);
                 var hashedPassword = bcrypt.hashSync(password, process.env.BCRYPT_SALT);
-                const createdUser = yield index_1.Users.create({ email, password: hashedPassword, username });
-                return createdUser;
+                yield index_1.Users.create({ email, password: hashedPassword, username }, { include: { model: index_1.Clubs, as: 'club', include: ['hobbies'] } });
+                const token = this.tokenHandler.createToken({ email, password });
+                return token;
             }
+        });
+        this.joinClub = (userId, clubId) => __awaiter(this, void 0, void 0, function* () {
+            yield index_1.UsersClubs.create({ userId, clubId }, { include: [index_1.Users, index_1.Clubs] });
         });
     }
 }
