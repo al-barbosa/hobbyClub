@@ -27,4 +27,6 @@ const club_controllers_1 = __importDefault(require("../controllers/club.controll
 const clubController = new club_controllers_1.default();
 const clubRoute = express.Router();
 clubRoute.get('/', clubController.getAll);
+clubRoute.post('/', clubController.createClub);
+clubRoute.get('/:id', clubController.getClub);
 exports.default = clubRoute;

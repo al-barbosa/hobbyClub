@@ -53,7 +53,6 @@ class UserService {
             const searchedUser = yield index_1.Users.findByPk(id, {
                 include: { model: index_1.Clubs, as: 'club', include: ['hobbies'] }
             });
-            console.log(searchedUser);
             if (!searchedUser)
                 throw new ErrorHelper_1.default('User not found', 404);
             return searchedUser;
@@ -91,7 +90,10 @@ class UserService {
             }
         });
         this.joinClub = (userId, clubId) => __awaiter(this, void 0, void 0, function* () {
-            yield index_1.UsersClubs.create({ userId, clubId }, { include: [index_1.Users, index_1.Clubs] });
+            const checkUserClub = yield index_1.UsersClubs.findOne({ where: { userId, clubId } });
+            if (checkUserClub)
+                throw new ErrorHelper_1.default('User already joined club', 404);
+            yield index_1.UsersClubs.create({ userId, clubId });
         });
     }
 }

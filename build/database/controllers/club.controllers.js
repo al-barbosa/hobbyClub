@@ -22,12 +22,26 @@ class ClubController {
                 .status(200)
                 .json(allUsers);
         });
-        this.getClub = (_req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.getClub = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const searchedClub = yield this.clubService.getAll();
+                const searchedClub = yield this.clubService.getClub(req.params.id);
                 return res
                     .status(200)
                     .json(searchedClub);
+            }
+            catch (e) {
+                const { code, message } = e;
+                return res
+                    .status(code)
+                    .json({ message });
+            }
+        });
+        this.createClub = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const newClub = yield this.clubService.createClub(req.body);
+                return res
+                    .status(200)
+                    .json(newClub);
             }
             catch (e) {
                 const { code, message } = e;

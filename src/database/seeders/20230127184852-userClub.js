@@ -23,6 +23,10 @@ module.exports = {
         user_id: 3,
         club_id: 1,
       },
+      {
+        user_id: 3,
+        club_id: 2,
+      },
     ], {});
   },
 

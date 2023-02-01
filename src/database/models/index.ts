@@ -103,14 +103,7 @@ Hobbies.init({
   timestamps: true,
 });
 
-UsersClubs.init({
-  id: {
-    type: INTEGER,
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-}, {
+UsersClubs.init({}, {
   underscored: true,
   sequelize: db,
   modelName: 'usersClubs',
@@ -125,28 +118,30 @@ Hobbies.belongsTo(Clubs, { foreignKey: 'clubId', as: 'club' });
 
 Clubs.hasMany(Hobbies, { foreignKey: 'clubId', as: 'hobbies' });
 
-Users.belongsToMany(Clubs, {
-  through: UsersClubs,
-  foreignKey: 'clubId',
-  otherKey: 'userId',
-  as: 'club',
-});
+// Users.belongsToMany(Clubs, {
+//   through: UsersClubs,
+//   foreignKey: 'clubId',
+//   otherKey: 'userId',
+//   as: 'club',
+// });
 
-Clubs.belongsToMany(Users, {
-  through: UsersClubs,
-  foreignKey: 'userId',
-  otherKey: 'clubId',
-  as: 'user',
-});
+// Clubs.belongsToMany(Users, {
+//   through: UsersClubs,
+//   foreignKey: 'userId',
+//   otherKey: 'clubId',
+//   as: 'user',
+// });
 
-Users.hasMany(UsersClubs);
+// Users.hasMany(UsersClubs);
 
-UsersClubs.belongsTo(Users);
+// UsersClubs.belongsTo(Users);
 
-Clubs.hasMany(UsersClubs);
+// Clubs.hasMany(UsersClubs);
 
-UsersClubs.belongsTo(Clubs);
+// UsersClubs.belongsTo(Clubs);
 
+Users.belongsToMany(Clubs, { through: UsersClubs, as: 'club' })
+Clubs.belongsToMany(Users, { through: UsersClubs, as: 'user' })
 
 
 

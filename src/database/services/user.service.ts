@@ -56,16 +56,17 @@ export default class UserService {
 
     var hashedPassword = bcrypt.hashSync(password, process.env.BCRYPT_SALT);
 
-
     await Users.create({ email, password: hashedPassword, username }, { include: { model: Clubs, as: 'club', include: ['hobbies'] }});
 
-    
     const token = this.tokenHandler.createToken({ email, password });
 
     return token;
   }}
 
   public joinClub = async (userId: string, clubId: string): Promise<void> => {
-    await UsersClubs.create({ userId, clubId }, { include: [Users, Clubs] });
+    const checkUserClub = await UsersClubs.findOne({ where: { userId, clubId }})
+    if (checkUserClub) throw new ErrorHandler('User already joined club', 404);
+
+    await UsersClubs.create({ userId, clubId });
   }
 }
