@@ -27,8 +27,8 @@ export default class UserController {
 
   public login = async (req: Request, res: Response): Promise<Response> => {
     try {
-      const token = await this.userService.login(req.body);
-      return res.status(200).json({ token });
+      const loggedUser = await this.userService.login(req.body);
+      return res.status(200).json(loggedUser);
     } catch (e) {
       const { code, message } = e as IError;
       return res

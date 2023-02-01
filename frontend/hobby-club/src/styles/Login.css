@@ -1,0 +1,48 @@
+* {
+  background-color: #023E73;
+  color: #D9CCC1;
+}
+
+#loginPage {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 50%;
+  width: 100%;
+}
+
+.loginForm {
+  align-items: center;
+  background-color: #024059;
+  border-radius: 5%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+.loginForm * {
+  background-color: #024059;
+}
+
+input {
+  margin: 5px 20px 20px 20px;
+
+}
+
+input[type="text"], textarea {
+  background-color : #BF6415;
+}
+
+input, select, textarea{
+  color: #D9CCC1;
+}
+
+.button {
+  background-color: #BF6415;
+}
+
+.buttonsDiv {
+  display: flex;
+  gap: 20px;
+}

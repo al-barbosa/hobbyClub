@@ -17,3 +17,10 @@ export interface IUserLogin {
   email: string,
   password: string,
 }
+
+export interface IUserToken {
+  id?: number,
+  username: string,
+  email: string,
+  token: string
+}
