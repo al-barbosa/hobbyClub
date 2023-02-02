@@ -16,8 +16,26 @@ export default class UserAPI {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: email,
-        password: password,
+        email,
+        password,
+      })
+    });
+    const data = await response.json();
+    return data;
+  }
+
+  public async createUser(email: string, username: string, password: string) {
+    const URL = 'user';
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        username,
+        password,
       })
     });
     const data = await response.json();

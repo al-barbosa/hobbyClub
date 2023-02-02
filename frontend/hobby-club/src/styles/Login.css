@@ -7,7 +7,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding-top: 50%;
+  padding-top: 20%;
   width: 100%;
 }
 
@@ -38,11 +38,22 @@ input, select, textarea{
   color: #D9CCC1;
 }
 
-.button {
-  background-color: #BF6415;
+#errorMessage {
+  padding-bottom: 15px;
+}
+
+.btnClass {
+  padding: 5px 15px;
+  color: #D9CCC1;
 }
 
 .buttonsDiv {
   display: flex;
   gap: 20px;
+}
+
+@media (max-width: 820px) {
+  #loginPage {
+    padding-top: 50%;
+  }
 }
