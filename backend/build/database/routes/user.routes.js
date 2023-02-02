@@ -29,7 +29,7 @@ const userControllers = new user_controllers_1.default();
 const tokenHandler = new TokenHelper_1.default();
 const userRoute = express.Router();
 userRoute.get('/', userControllers.getAll);
-userRoute.get('/:id', userControllers.getUser);
+userRoute.get('/:id', tokenHandler.validateToken, userControllers.getUser);
 userRoute.post('/:id/:club', tokenHandler.validateToken, userControllers.joinClub);
 userRoute.post('/', userControllers.createUser);
 userRoute.post('/login', userControllers.login);

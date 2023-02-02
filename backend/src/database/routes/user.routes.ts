@@ -8,7 +8,7 @@ const tokenHandler = new TokenHandler();
 const userRoute = express.Router();
 
 userRoute.get('/', userControllers.getAll);
-userRoute.get('/:id', userControllers.getUser);
+userRoute.get('/:id', tokenHandler.validateToken, userControllers.getUser);
 userRoute.post('/:id/:club', tokenHandler.validateToken, userControllers.joinClub);
 userRoute.post('/', userControllers.createUser);
 userRoute.post('/login', userControllers.login);

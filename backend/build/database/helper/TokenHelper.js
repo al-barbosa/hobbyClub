@@ -33,16 +33,24 @@ class TokenHandler {
     constructor() {
         this.createToken = (user) => jwt.sign(Object.assign({}, user), secret, jwtConfig);
         this.validateToken = (req, res, next) => {
-            const { authorization: token } = req.headers;
-            if (!token)
-                throw new ErrorHelper_1.default('Email already registered', 404);
-            // return res.status(404).json({ message: 'Token not found' });
-            jwt.verify(token, secret, (err, user) => {
-                if (err)
-                    throw new ErrorHelper_1.default('Email already registered', 404);
-                //  res.status(404).json({ message: 'Invalid token' });
-                next();
-            });
+            try {
+                const { authorization: token } = req.headers;
+                if (!token)
+                    throw new ErrorHelper_1.default('No token founded', 404);
+                // return res.status(404).json({ message: 'Token not found' });
+                jwt.verify(token, secret, (err, user) => {
+                    if (err)
+                        throw new ErrorHelper_1.default('Invalid token', 404);
+                    //  res.status(404).json({ message: 'Invalid token' });
+                    next();
+                });
+            }
+            catch (e) {
+                const { code, message } = e;
+                return res
+                    .status(code)
+                    .json({ message });
+            }
         };
     }
 }

@@ -41,17 +41,16 @@ class UserService {
         this.tokenHandler = new TokenHelper_1.default();
         this.userValidaton = new UserValidation_1.default();
         this.getAll = () => __awaiter(this, void 0, void 0, function* () {
-            // const allUsers = await Users.findAll({
-            //   include: { model: Clubs, as: 'club', include: ['hobbies'] },
-            // });
             const allUsers = yield index_1.Users.findAll({
                 include: { model: index_1.Clubs, as: 'club', include: ['hobbies'] },
+                attributes: { exclude: ['password'] },
             });
             return allUsers;
         });
         this.getUser = (id) => __awaiter(this, void 0, void 0, function* () {
             const searchedUser = yield index_1.Users.findByPk(id, {
-                include: { model: index_1.Clubs, as: 'club', include: ['hobbies'] }
+                include: { model: index_1.Clubs, as: 'club', include: ['hobbies'] },
+                attributes: { exclude: ['password'] },
             });
             if (!searchedUser)
                 throw new ErrorHelper_1.default('User not found', 404);
@@ -63,15 +62,20 @@ class UserService {
             if ((_a = error.error) === null || _a === void 0 ? void 0 : _a.message)
                 throw new ErrorHelper_1.default((_b = error.error) === null || _b === void 0 ? void 0 : _b.message, 404);
             const { email, password } = loginInfo;
-            const userInfo = yield index_1.Users.findOne({ where: { email }, raw: true });
+            const userInfo = yield index_1.Users.findOne({
+                where: { email },
+                raw: true
+            });
             if (!userInfo)
                 throw new ErrorHelper_1.default('User not found', 404);
             const { password: hashedPassword } = userInfo;
             const checkHash = bcrypt.compareSync(password, hashedPassword);
             if (!checkHash)
-                throw new ErrorHelper_1.default('Icorrect email or password', 404);
+                throw new ErrorHelper_1.default('Incorrect email or password', 404);
+            const { id, username } = userInfo;
             const token = this.tokenHandler.createToken(loginInfo);
-            return token;
+            const answer = { email, id, username, token };
+            return answer;
         });
         this.createUser = (userInfo) => __awaiter(this, void 0, void 0, function* () {
             var _c, _d;
@@ -84,9 +88,11 @@ class UserService {
                 if (checkEmail)
                     throw new ErrorHelper_1.default('Email already registered', 404);
                 var hashedPassword = bcrypt.hashSync(password, process.env.BCRYPT_SALT);
-                yield index_1.Users.create({ email, password: hashedPassword, username }, { include: { model: index_1.Clubs, as: 'club', include: ['hobbies'] } });
+                const nUser = yield index_1.Users.create({ email, password: hashedPassword, username }, { include: { model: index_1.Clubs, as: 'club', include: ['hobbies'] } });
+                const { id } = nUser;
                 const token = this.tokenHandler.createToken({ email, password });
-                return token;
+                const createdUser = { email, password, username, id, token };
+                return createdUser;
             }
         });
         this.joinClub = (userId, clubId) => __awaiter(this, void 0, void 0, function* () {

@@ -1,14 +1,13 @@
 export default class UserAPI {
   public getAll = async () => {
-    const URL = 'user';
+    const URL = '/user';
     const response = await fetch(URL);
     const data = await response.json();
-    console.log(data)
     return data;
   }
 
   public async login(email: string, password: string) {
-    const URL = 'user/login';
+    const URL = '/user/login';
     const response = await fetch(URL, {
       method: "POST",
       headers: {
@@ -25,7 +24,7 @@ export default class UserAPI {
   }
 
   public async createUser(email: string, username: string, password: string) {
-    const URL = 'user';
+    const URL = '/user';
     const response = await fetch(URL, {
       method: "POST",
       headers: {
@@ -37,6 +36,20 @@ export default class UserAPI {
         username,
         password,
       })
+    });
+    const data = await response.json();
+    return data;
+  }
+
+  public async getUser(id: string, token: string) {
+    const URL =`/user/${id}`;
+    const response = await fetch(URL, {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
     });
     const data = await response.json();
     return data;

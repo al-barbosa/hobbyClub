@@ -49,7 +49,7 @@ export default class UserService {
     return answer;
   }
 
-  public createUser = async (userInfo: IUser): Promise<string> => {{
+  public createUser = async (userInfo: IUser): Promise<IUserLogin> => {{
     const error: ValidationResult = this.userValidaton.validateSignUp(userInfo)
     if (error.error?.message) throw new ErrorHandler(error.error?.message, 404);
 
@@ -60,11 +60,15 @@ export default class UserService {
 
     var hashedPassword = bcrypt.hashSync(password, process.env.BCRYPT_SALT);
 
-    await Users.create({ email, password: hashedPassword, username }, { include: { model: Clubs, as: 'club', include: ['hobbies'] }});
+    const nUser = await Users.create({ email, password: hashedPassword, username }, { include: { model: Clubs, as: 'club', include: ['hobbies'] }});
+
+    const { id } = nUser;
 
     const token = this.tokenHandler.createToken({ email, password });
 
-    return token;
+    const createdUser = { email, password, username, id, token }
+
+    return createdUser;
   }}
 
   public joinClub = async (userId: string, clubId: string): Promise<void> => {

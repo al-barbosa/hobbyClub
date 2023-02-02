@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import IError from '../interfaces/error.interface';
-import { IUser } from '../interfaces/user.interface';
+import { IUser, IUserLogin } from '../interfaces/user.interface';
 import UserService from '../services/user.service';
 
 export default class UserController {
@@ -39,10 +39,10 @@ export default class UserController {
 
   public createUser = async (req: Request, res: Response) => {
     try {
-      const token: string = await this.userService.createUser(req.body);
+      const createdUser: IUserLogin = await this.userService.createUser(req.body);
       return res
         .status(200)
-        .json({ token });
+        .json(createdUser);
     } catch (e) {
       const { code, message } = e as IError;
       return res

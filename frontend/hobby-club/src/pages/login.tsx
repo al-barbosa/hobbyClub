@@ -1,5 +1,5 @@
 import '../styles/Login.css'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
 import UserAPI from '../helper/UserAPI';
 
@@ -63,6 +63,10 @@ export default function Login() {
     })
   }
 
+  useEffect(() => {
+    eraseCookies()
+  }, [])
+
   const handleLogin = async (e: React.SyntheticEvent): Promise<NavigateFunction|void> => {
     e.preventDefault();
     const userInfo = await userApi.login(loginInfo.email, loginInfo.password);
@@ -73,7 +77,7 @@ export default function Login() {
     if (userInfo.token) {
       setErrorMessage('');
       document.cookie = JSON.stringify(userInfo);
-      navigate('/profile');
+      navigate(`/profile/${userInfo.id}`);
     }
   };
 

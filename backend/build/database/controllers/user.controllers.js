@@ -36,8 +36,8 @@ class UserController {
         });
         this.login = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const token = yield this.userService.login(req.body);
-                return res.status(200).json({ token });
+                const loggedUser = yield this.userService.login(req.body);
+                return res.status(200).json(loggedUser);
             }
             catch (e) {
                 const { code, message } = e;
@@ -48,10 +48,10 @@ class UserController {
         });
         this.createUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const token = yield this.userService.createUser(req.body);
+                const createdUser = yield this.userService.createUser(req.body);
                 return res
                     .status(200)
-                    .json({ token });
+                    .json(createdUser);
             }
             catch (e) {
                 const { code, message } = e;
