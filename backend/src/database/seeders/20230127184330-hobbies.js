@@ -6,6 +6,7 @@ module.exports = {
       {
         name: 'O Capital',
         type: 'book',
+        img: 'https://covers.openlibrary.org/b/isbn/8575595482-L.jpg',
         finished: false,
         club_id: 1,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -14,6 +15,7 @@ module.exports = {
       {
         name: 'Manifesto do Partido Comunista',
         type: 'book',
+        img: 'https://covers.openlibrary.org/b/isbn/8563560360-L.jpg',
         finished: true,
         club_id: 1,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -22,6 +24,7 @@ module.exports = {
       {
         name: 'Povo Brasileiro',
         type: 'book',
+        img: null,
         finished: false,
         club_id: 2,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -30,6 +33,7 @@ module.exports = {
       {
         name: 'Minority Report',
         type: 'movie',
+        img: 'https://image.tmdb.org/t/p/w500/ccqpHq5tk5W4ymbSbuoy4uYOxFI.jpg',
         finished: true,
         club_id: 2,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -62,6 +66,7 @@ module.exports = {
       {
         name: 'O Iluminado',
         type: 'book',
+        img: 'https://covers.openlibrary.org/b/isbn/8581050484-L.jpg',
         finished: true,
         club_id: 3,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),

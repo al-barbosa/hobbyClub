@@ -1,0 +1,24 @@
+.clubIcon {
+  height:40px;
+}
+
+.userClub {
+  padding: 10px;
+}
+
+a {
+  font-size: xx-large;
+  color: #D9CCC1;
+  text-decoration: none;
+}
+
+.curretnHobby {
+  font-size: larger;
+  padding-left: 40px;
+}
+
+@media (max-width: 600px) {
+  img {
+    height:30px;
+  }
+}

@@ -6,6 +6,7 @@ export interface IUser {
   email: string,
   createdAt?: string,
   updatedAt?: string,
+  loggedUser: boolean,
 }
 
 export interface IUserClubs extends IUser {
