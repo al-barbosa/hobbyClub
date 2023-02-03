@@ -22,7 +22,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersClubs = exports.Hobbies = exports.Clubs = exports.Users = void 0;
+exports.UserMessages = exports.HobbyMessages = exports.UsersClubs = exports.Hobbies = exports.Clubs = exports.Users = void 0;
 const sequelize_1 = require("sequelize");
 const config = __importStar(require("../config/database"));
 const _1 = __importDefault(require("."));
@@ -39,6 +39,12 @@ exports.Hobbies = Hobbies;
 class UsersClubs extends sequelize_1.Model {
 }
 exports.UsersClubs = UsersClubs;
+class HobbyMessages extends sequelize_1.Model {
+}
+exports.HobbyMessages = HobbyMessages;
+class UserMessages extends sequelize_1.Model {
+}
+exports.UserMessages = UserMessages;
 Users.init({
     id: {
         type: sequelize_1.INTEGER,
@@ -116,6 +122,60 @@ UsersClubs.init({}, {
     modelName: 'usersClubs',
     timestamps: false,
 });
+HobbyMessages.init({
+    id: {
+        type: sequelize_1.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    text: {
+        type: sequelize_1.STRING,
+        allowNull: false,
+    },
+    hobby_id: {
+        type: sequelize_1.INTEGER,
+        allowNull: false,
+    },
+    user_id: {
+        type: sequelize_1.INTEGER,
+        allowNull: false,
+    },
+}, {
+    underscored: true,
+    sequelize: _1.default,
+    modelName: 'hobbyMessages',
+    timestamps: true,
+});
+UserMessages.init({
+    id: {
+        type: sequelize_1.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    text: {
+        type: sequelize_1.STRING,
+        allowNull: false,
+    },
+    sender_id: {
+        type: sequelize_1.INTEGER,
+        allowNull: false,
+    },
+    receiver_id: {
+        type: sequelize_1.INTEGER,
+        allowNull: false,
+    },
+    read: {
+        type: sequelize_1.BOOLEAN,
+        allowNull: false,
+    }
+}, {
+    underscored: true,
+    sequelize: _1.default,
+    modelName: 'userMessages',
+    timestamps: true,
+});
 Clubs.belongsTo(Users, { foreignKey: 'adminId', as: 'admin' });
 Users.hasMany(Clubs, { foreignKey: 'adminId', as: 'admin_of' });
 Hobbies.belongsTo(Clubs, { foreignKey: 'clubId', as: 'club' });
@@ -138,3 +198,7 @@ Clubs.hasMany(Hobbies, { foreignKey: 'clubId', as: 'hobbies' });
 // UsersClubs.belongsTo(Clubs);
 Users.belongsToMany(Clubs, { through: UsersClubs, as: 'club' });
 Clubs.belongsToMany(Users, { through: UsersClubs, as: 'user' });
+HobbyMessages.belongsTo(Hobbies, { foreignKey: 'hobby_id', as: 'hobby' });
+HobbyMessages.belongsTo(Users, { foreignKey: 'user_id', as: 'user' });
+UserMessages.belongsTo(Users, { foreignKey: 'sender_id', as: 'sender' });
+UserMessages.belongsTo(Users, { foreignKey: 'receiver_id', as: 'receiver' });

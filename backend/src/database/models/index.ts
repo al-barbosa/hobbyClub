@@ -29,6 +29,21 @@ class UsersClubs extends Model {
   declare id: number;
 }
 
+class HobbyMessages extends Model {
+  declare id: number;
+  declare text: string;
+  declare hobby_id: number;
+  declare user_id: number;
+}
+
+class UserMessages extends Model {
+  declare id: number;
+  declare text: string;
+  declare sender_id: number;
+  declare receiver_id: number;
+  declare read: boolean;
+}
+
 Users.init({
   id: {
     type: INTEGER,
@@ -110,6 +125,62 @@ UsersClubs.init({}, {
   timestamps: false,
 });
 
+HobbyMessages.init({
+  id: {
+    type: INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  text: {
+    type: STRING,
+    allowNull: false,
+  },
+  hobby_id: {
+    type: INTEGER,
+    allowNull: false,
+  },
+  user_id: {
+    type: INTEGER,
+    allowNull: false,
+  },
+}, {
+  underscored: true,
+  sequelize: db,
+  modelName: 'hobbyMessages',
+  timestamps: true,
+});
+
+UserMessages.init({
+  id: {
+    type: INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  text: {
+    type: STRING,
+    allowNull: false,
+  },
+  sender_id: {
+    type: INTEGER,
+    allowNull: false,
+  },
+  receiver_id: {
+    type: INTEGER,
+    allowNull: false,
+  },
+  read: {
+    type: BOOLEAN,
+    allowNull: false,
+  }
+}, {
+  underscored: true,
+  sequelize: db,
+  modelName: 'userMessages',
+  timestamps: true,
+});
+
 Clubs.belongsTo(Users, { foreignKey: 'adminId', as: 'admin' });
 
 Users.hasMany(Clubs, { foreignKey: 'adminId', as: 'admin_of' });
@@ -143,6 +214,12 @@ Clubs.hasMany(Hobbies, { foreignKey: 'clubId', as: 'hobbies' });
 Users.belongsToMany(Clubs, { through: UsersClubs, as: 'club' })
 Clubs.belongsToMany(Users, { through: UsersClubs, as: 'user' })
 
+HobbyMessages.belongsTo(Hobbies, { foreignKey: 'hobby_id', as: 'hobby' })
+HobbyMessages.belongsTo(Users, { foreignKey: 'user_id', as: 'user' })
+
+UserMessages.belongsTo(Users, { foreignKey: 'sender_id', as: 'sender' })
+UserMessages.belongsTo(Users, { foreignKey: 'receiver_id', as: 'receiver' })
 
 
-export { Users, Clubs, Hobbies, UsersClubs }
+
+export { Users, Clubs, Hobbies, UsersClubs, HobbyMessages, UserMessages }

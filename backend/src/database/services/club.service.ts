@@ -18,6 +18,7 @@ export default class ClubService {
     });
     return allClubs;
   }
+  
   public getClub = async (id: string): Promise<Clubs> => {
     const searchedClub = await Clubs.findByPk(id, {
       include: [{ model: Users, as: 'admin' },
