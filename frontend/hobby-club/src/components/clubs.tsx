@@ -20,12 +20,15 @@ export default function Clubs(props: { userClubs: IClub[] }) {
           </NavLink><br/>
           {club.hobbies
             .filter((hobby) => hobby.finished === false)
-            .map((hobby, index) => <div key={index}>
+            .map((hobby, index) => <div
+              key={index}
+              className='hobbyBox'
+              >
                 {hobby.img !== null ?
                   <img src={hobby.img} alt={hobby.name} className='hobbyCover' /> :
                   <img src={notFound} alt={hobby.name} className='hobbyCover' />
                 }
-                <span>{hobby.name}</span>
+                <span className='currentHobby'>{hobby.name}</span>
               </div>)}
         </div>
         )}

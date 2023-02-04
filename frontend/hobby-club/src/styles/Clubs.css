@@ -1,18 +1,26 @@
 #clubPage {
-  display: flex;
   padding: 30px 40px 0px 40px;
 }
 
 .clubIcon {
-  height:40px;
+  height: 60px;
+  width: auto;
+  padding-left: 10px;
 }
 
 .userClub {
   padding: 10px;
 }
 
+.hobbyBox {
+  display: flex;
+  gap: 20px;
+  padding: 10px 0px 25px 50px;
+}
+
 .hobbyCover {
   width: 120px;
+  height: auto;
 }
 
 a {
@@ -21,13 +29,31 @@ a {
   text-decoration: none;
 }
 
-.curretnHobby {
+.currentHobby {
   font-size: larger;
-  padding-left: 40px;
 }
 
 @media (max-width: 600px) {
-  img {
+  a {
+    font-size: larger;
+  }
+
+  .hobbyBox {
+    display: flex;
+    gap: 15px;
+    padding: 10px 0px 25px 20px;
+  }
+
+  .currentHobby {
+    font-size: medium;
+  }
+
+  .clubIcon {
     height:30px;
+  }
+
+  .hobbyCover {
+    width: 70px;
+    height: auto;
   }
 }
