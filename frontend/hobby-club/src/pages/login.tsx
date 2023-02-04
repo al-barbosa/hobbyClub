@@ -101,7 +101,7 @@ export default function Login() {
     if (newUserInfo.token) {
       setErrorMessage('');
       document.cookie = JSON.stringify(newUserInfo);
-      navigate('/profile');
+      navigate(`/profile/${newUserInfo.id}`);
     }
   }
 
