@@ -30,6 +30,34 @@ class HobbyController {
                     .json({ message });
             }
         });
+        this.postMessage = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.hobbyService.postMessage(req.params.id, req.params.user, req.body.text);
+                return res
+                    .status(200)
+                    .json({ message: 'Message posted' });
+            }
+            catch (e) {
+                const { code, message } = e;
+                return res
+                    .status(code)
+                    .json({ message });
+            }
+        });
+        this.deleteMessage = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.hobbyService.deleteMessage(req.params.messageId);
+                return res
+                    .status(200)
+                    .json({ message: 'Message deeleted' });
+            }
+            catch (e) {
+                const { code, message } = e;
+                return res
+                    .status(code)
+                    .json({ message });
+            }
+        });
     }
 }
 exports.default = HobbyController;

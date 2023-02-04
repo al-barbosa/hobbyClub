@@ -18,6 +18,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      img: {
+        allowNull: true,
+        type: Sequelize.STRING(512),
+      },
       finished: {
         allowNull: false,
         type: Sequelize.BOOLEAN,

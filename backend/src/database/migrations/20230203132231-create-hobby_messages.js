@@ -13,10 +13,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(5000),
       },
-      img: {
-        allowNull: true,
-        type: Sequelize.STRING(512),
-      },
       hobby_id: {
         allowNull: false,
         type: Sequelize.INTEGER,

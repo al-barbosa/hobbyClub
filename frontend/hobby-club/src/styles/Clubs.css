@@ -1,9 +1,18 @@
+#clubPage {
+  display: flex;
+  padding: 30px 40px 0px 40px;
+}
+
 .clubIcon {
   height:40px;
 }
 
 .userClub {
   padding: 10px;
+}
+
+.hobbyCover {
+  width: 120px;
 }
 
 a {

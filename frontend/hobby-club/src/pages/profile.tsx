@@ -45,9 +45,9 @@ export default function Profile() {
 
   return (
     <div id="profilePage">
-      <Header
+      {userInfo.username && <Header
         userInfo={ userInfo }
-      />
+      />}
       {userClubs[0] &&
       <Clubs
         userClubs={ userClubs }

@@ -2,14 +2,11 @@ import '../styles/Header.css'
 import mailboxNew from '../icons/mailboxNew.png'
 import mail from '../icons/mail.png'
 import magnifyingGlass from '../icons/magnifyingGlass.png'
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IUser } from '../interfaces/user.interface';
 // import { useNavigate, NavigateFunction } from 'react-router-dom';
 
 export default function Header(props: { userInfo: IUser }) {
-  useEffect(() => {
-    console.log('x')
-  },[])
   return (
     <div id="header">
       <div className="info">

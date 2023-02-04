@@ -23,8 +23,17 @@ class HobbyService {
                 throw new ErrorHelper_1.default('Hobby not found', 404);
             const getMessages = yield models_1.HobbyMessages.findAll({ where: { hobby_id: id }, raw: true });
             searchedClub.messages = getMessages;
-            console.log(getMessages);
             return searchedClub;
+        });
+        this.postMessage = (hobbyId, userId, text) => __awaiter(this, void 0, void 0, function* () {
+            yield models_1.HobbyMessages.create({
+                hobby_id: hobbyId,
+                user_id: userId,
+                text
+            });
+        });
+        this.deleteMessage = (messageId) => __awaiter(this, void 0, void 0, function* () {
+            yield models_1.HobbyMessages.destroy({ where: { id: messageId } });
         });
     }
 }

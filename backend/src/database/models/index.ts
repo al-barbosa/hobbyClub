@@ -103,6 +103,10 @@ Hobbies.init({
     type: STRING,
     allowNull: false,
   },
+  img: {
+    type: INTEGER,
+    allowNull: true,
+  },
   type: {
     type: STRING,
     allowNull: false,

@@ -42,6 +42,7 @@ module.exports = {
       {
         name: 'Fatal Frame 2',
         type: 'game',
+        img: 'https://howlongtobeat.com/games/250px-Fatal_Frame_II_-_Crimson_Butterfly.jpg?width=250',
         finished: false,
         club_id: 3,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -50,6 +51,7 @@ module.exports = {
       {
         name: 'Resident Evil Zero',
         type: 'game',
+        img: 'https://howlongtobeat.com/games/250px-Rezerobox.jpg?width=250',
         finished: true,
         club_id: 3,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -58,6 +60,7 @@ module.exports = {
       {
         name: 'Dead Space',
         type: 'game',
+        img: 'https://howlongtobeat.com/games/Dead_Space_Box_Art.jpg?width=250',
         finished: true,
         club_id: 3,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),

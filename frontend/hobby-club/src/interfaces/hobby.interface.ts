@@ -6,5 +6,6 @@ export default interface IHobby {
   name: string,
   type: string,
   updatedAt: string,
+  img: string,
   // messages?: IMessages[]
 }
