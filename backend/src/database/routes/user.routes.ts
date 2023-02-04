@@ -9,6 +9,7 @@ const userRoute = express.Router();
 
 userRoute.get('/', userControllers.getAll);
 userRoute.get('/:id', tokenHandler.validateToken, userControllers.getUser);
+userRoute.get('/:id/messages', tokenHandler.validateToken, userControllers.getMessages);
 userRoute.post('/:id/:club', tokenHandler.validateToken, userControllers.joinClub);
 userRoute.post('/', userControllers.createUser);
 userRoute.post('/login', userControllers.login);

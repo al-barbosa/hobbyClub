@@ -17,6 +17,8 @@ export default function Profile() {
     loggedUser: false,
   });
 
+  const [messages, setMessages] = useState([]);
+
   const [loggedUser, setLoggedUser] = useState(false)
 
   const [userClubs, setUserClubs] = useState([]);
@@ -37,16 +39,21 @@ export default function Profile() {
       if (!getInfo.club) navigate('/');
       const { email, username, id } = getInfo
       checkIfLogged(userInfo.id, getInfo.id);
+      if (userInfo) {
+        const messages = await userApi.getMessage(userId, `${userInfo.token}`);
+        setMessages(messages);
+      }
       setUserInfo({ email, username, id, loggedUser });
-      setUserClubs(getInfo.club)
+      setUserClubs(getInfo.club);
     }
     getUserClubs();
-  }, [navigate, location.pathname, loggedUser])
+  }, [navigate, location.pathname, loggedUser]);
 
   return (
     <div id="profilePage">
       {userInfo.username && <Header
         userInfo={ userInfo }
+        messages={ messages }
       />}
       {userClubs[0] &&
       <Clubs

@@ -37,7 +37,7 @@ export default class UserController {
     }
   };
 
-  public createUser = async (req: Request, res: Response) => {
+  public createUser = async (req: Request, res: Response): Promise<Response> => {
     try {
       const createdUser: IUserLogin = await this.userService.createUser(req.body);
       return res
@@ -51,12 +51,26 @@ export default class UserController {
     }
   }
 
-  public joinClub = async (req: Request, res: Response) => {
+  public joinClub = async (req: Request, res: Response): Promise<Response> => {
     try {
       await this.userService.joinClub(req.params.id, req.params.club);
       return res
         .status(200)
         .json({ message: `User ${req.params.id} joined club ${req.params.club}` });
+    } catch (e) {
+      const { code, message } = e as IError;
+      return res
+        .status(code)
+        .json({ message });
+    }
+  }
+
+  public getMessages = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const messages = await this.userService.getMessages(req.params.id);
+      return res
+        .status(200)
+        .json(messages);
     } catch (e) {
       const { code, message } = e as IError;
       return res

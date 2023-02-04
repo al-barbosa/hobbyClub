@@ -1,5 +1,5 @@
 import ErrorHandler from '../helper/ErrorHelper';
-import { Clubs, Users, UsersClubs } from '../models/index';
+import { Clubs, UserMessages, Users, UsersClubs } from '../models/index';
 import * as bcrypt from 'bcryptjs';
 import { IUser, IUserToken, IUserLogin } from '../interfaces/user.interface';
 import TokenHandler from '../helper/TokenHelper';
@@ -76,5 +76,10 @@ export default class UserService {
     if (checkUserClub) throw new ErrorHandler('User already joined club', 404);
 
     await UsersClubs.create({ userId, clubId });
+  }
+
+  public getMessages = async (userId: string): Promise<UserMessages[]> => {
+    const messages = await UserMessages.findAll({ where: { receiver_id: userId }});
+    return messages;
   }
 }

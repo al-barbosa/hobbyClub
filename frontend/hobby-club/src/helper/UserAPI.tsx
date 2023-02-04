@@ -54,4 +54,18 @@ export default class UserAPI {
     const data = await response.json();
     return data;
   }
+
+  public async getMessage(id: string, token: string) {
+    const URL =`/user/${id}/messages`;
+    const response = await fetch(URL, {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    });
+    const data = await response.json();
+    return data;
+  }
 };
