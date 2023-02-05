@@ -8,7 +8,12 @@ import { IUser } from '../interfaces/user.interface';
 import IMessage from '../interfaces/message.interface';
 // import { useNavigate, NavigateFunction } from 'react-router-dom';
 
-export default function Header(props: { userInfo: IUser, messages: IMessage[] }) {
+export default function Header(props: {
+  userInfo: IUser,
+  messages: IMessage[],
+  setShowMessages: React.Dispatch<React.SetStateAction<boolean>>,
+}) {
+
   return (
     <div id="header">
       <div className="info">
@@ -21,8 +26,18 @@ export default function Header(props: { userInfo: IUser, messages: IMessage[] })
         <img className='magnifyingGlass headerImg' src={ magnifyingGlass } alt='Search tool' />
         {props.userInfo.loggedUser ?
           (props.messages.every((message) => message.read) ?
-          <img className='message headerImg' src={ mailboxEmpty } alt='New messages in box' /> :
-          <img className='message headerImg' src={ mailboxNew } alt='New messages in box' /> )
+          <button
+            className='showMsgBtn'
+            onClick={() => props.setShowMessages(true)}
+          >
+            <img className='message headerImg' src={ mailboxEmpty } alt='New messages in box' />
+          </button> :
+          <button
+            className='showMsgBtn'
+            onClick={() => props.setShowMessages(true)}
+          >
+            <img className='message headerImg' src={ mailboxNew } alt='New messages in box' />
+          </button> )
           : <img className='message headerImg' src={ mail } alt='Send message' />
         }
       </div>

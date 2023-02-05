@@ -5,6 +5,7 @@ import UserAPI from '../helper/UserAPI';
 import { IUserClubs } from '../interfaces/user.interface';
 import Header from '../components/header';
 import Clubs from '../components/clubs';
+// import Message from '../components/messages';
 
 
 export default function Profile() {
@@ -22,6 +23,8 @@ export default function Profile() {
   const [loggedUser, setLoggedUser] = useState(false)
 
   const [userClubs, setUserClubs] = useState([]);
+
+  const [showMessages, setShowMessages] = useState(false)
 
   const location = useLocation();
 
@@ -54,11 +57,15 @@ export default function Profile() {
       {userInfo.username && <Header
         userInfo={ userInfo }
         messages={ messages }
+        setShowMessages={ setShowMessages }
       />}
       {userClubs[0] &&
       <Clubs
         userClubs={ userClubs }
       />}
+      {/* {(showMessages && loggedUser) && <Message
+        messages={ messages }
+      />} */}
     </div>
   )
 }

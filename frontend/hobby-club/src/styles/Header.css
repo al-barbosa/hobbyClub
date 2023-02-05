@@ -9,6 +9,10 @@
   background-color: #024059;
 }
 
+.showMsgBtn {
+  all: unset;
+}
+
 .icons {
   display: flex;
   gap: 20px;
