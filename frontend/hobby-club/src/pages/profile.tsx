@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import UserAPI from '../helper/UserAPI';
 import { IUserClubs } from '../interfaces/user.interface';
-import Header from '../components/header';
+import Header from '../components/profileHeader';
 import Clubs from '../components/clubs';
 // import Message from '../components/messages';
 
