@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import IClub from "../interfaces/club.interface";
 
 export default function profileHeader(props: {clubInfo: IClub}) {
-  console.log(props.clubInfo)
   return (
     <div>
       <h1 id='clubName'>{props.clubInfo.name}</h1>

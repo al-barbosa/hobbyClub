@@ -42,7 +42,7 @@ export default class UserAPI {
   }
 
   public async getUser(id: string, token: string) {
-    const URL =`/user/${id}`;
+    const URL = `/user/${id}`;
     const response = await fetch(URL, {
       method: "GET",
       headers: {
@@ -56,7 +56,7 @@ export default class UserAPI {
   }
 
   public async getMessage(id: string, token: string) {
-    const URL =`/user/${id}/messages`;
+    const URL = `/user/${id}/messages`;
     const response = await fetch(URL, {
       method: "GET",
       headers: {

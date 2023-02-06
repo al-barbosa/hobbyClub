@@ -1,0 +1,41 @@
+#hobbiesSection {
+  /* background-color: blue; */
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 5px;
+  width: 30%;
+}
+
+#hobbiesSection * {
+  padding: 5px;
+  border-radius: 5%;
+}
+
+.hobbyContainer {
+  background-color: #1F4373;
+}
+
+.hobbyContainer * {
+  background-color: #1F4373;
+}
+
+.hobbyContainerCurrent {
+  background-color: #0656BF;
+}
+
+.hobbyContainerCurrent * {
+  background-color: #0656BF;
+}
+
+.nameSection {
+  /* all: unset; */
+  align-items: start;
+  display: flex;
+  justify-content: space-between;
+}
+
+.typeIcon {
+  height: 35px;
+}
