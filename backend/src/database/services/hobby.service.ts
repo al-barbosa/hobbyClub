@@ -1,12 +1,15 @@
 import ErrorHandler from "../helper/ErrorHelper";
-import { Hobbies, HobbyMessages } from "../models";
+import { Hobbies, HobbyMessages, Users } from "../models";
 // import { ValidationResult } from 'joi';
 
 export default class HobbyService {
   public getHobby = async (id: string): Promise<any> => {
     const searchedClub: any = await Hobbies.findByPk(id, { raw: true });
     if (!searchedClub) throw new ErrorHandler('Hobby not found', 404);
-    const getMessages = await HobbyMessages.findAll( { where: { hobby_id: id }, raw: true } )
+    const getMessages = await HobbyMessages.findAll({
+      include: 'user',
+      where: { hobby_id: id },
+    });
     searchedClub.messages = getMessages;
     return searchedClub;
   };

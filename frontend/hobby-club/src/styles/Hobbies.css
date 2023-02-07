@@ -1,11 +1,9 @@
 #hobbiesSection {
-  /* background-color: blue; */
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding: 5px;
-  width: 30%;
+  width: 325px;
 }
 
 #hobbiesSection * {
@@ -33,7 +31,8 @@
   /* all: unset; */
   align-items: start;
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
+  justify-content: flex-start;
 }
 
 .typeIcon {

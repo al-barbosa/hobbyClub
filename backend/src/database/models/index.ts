@@ -218,7 +218,7 @@ Clubs.hasMany(Hobbies, { foreignKey: 'clubId', as: 'hobbies' });
 Users.belongsToMany(Clubs, { through: UsersClubs, as: 'club' })
 Clubs.belongsToMany(Users, { through: UsersClubs, as: 'user' })
 
-HobbyMessages.belongsTo(Hobbies, { foreignKey: 'hobby_id', as: 'hobby' })
+// HobbyMessages.belongsTo(Hobbies, { foreignKey: 'hobby_id', as: 'hobby' })
 HobbyMessages.belongsTo(Users, { foreignKey: 'user_id', as: 'user' })
 
 UserMessages.belongsTo(Users, { foreignKey: 'sender_id', as: 'sender' })
