@@ -11,4 +11,26 @@ export default class HobbyAPI {
     const data = await response.json();
     return data;
   }
+
+  public postMessage = async (
+    hobbyId: string,
+    userId: string,
+    text: string,
+    token: string
+) => {
+    const URL = `/hobby/${hobbyId}/${userId}`;
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: JSON.stringify({
+        text,
+      }),
+    });
+    const data = await response.json();
+    return data;
+  }
 }

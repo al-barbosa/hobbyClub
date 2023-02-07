@@ -1,3 +1,5 @@
+import { IUser } from './user.interface';
+
 export default interface IMessage {
   id: number,
   read: boolean,
@@ -6,4 +8,5 @@ export default interface IMessage {
   text: string,
   createdAt: string,
   updatedAt: string,
+  user: IUser,
 }
