@@ -30,6 +30,6 @@ const tokenHandler = new TokenHelper_1.default();
 const hobbyRoute = express.Router();
 // userRoute.get('/:id', tokenHandler.validateToken, HobbyController.getHobby);
 hobbyRoute.get('/:id', hobbyController.getHobby);
-hobbyRoute.post('/:id/:user', hobbyController.postMessage);
-hobbyRoute.delete('/:messageId', hobbyController.deleteMessage);
+hobbyRoute.post('/:id/:user', tokenHandler.validateToken, hobbyController.postMessage);
+hobbyRoute.delete('/:messageId', tokenHandler.validateToken, hobbyController.deleteMessage);
 exports.default = hobbyRoute;

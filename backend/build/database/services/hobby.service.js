@@ -21,7 +21,10 @@ class HobbyService {
             const searchedClub = yield models_1.Hobbies.findByPk(id, { raw: true });
             if (!searchedClub)
                 throw new ErrorHelper_1.default('Hobby not found', 404);
-            const getMessages = yield models_1.HobbyMessages.findAll({ where: { hobby_id: id }, raw: true });
+            const getMessages = yield models_1.HobbyMessages.findAll({
+                include: 'user',
+                where: { hobby_id: id },
+            });
             searchedClub.messages = getMessages;
             return searchedClub;
         });

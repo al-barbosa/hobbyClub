@@ -6,16 +6,20 @@ import HobbyAPI from '../helper/HobbyAPI'
 
 export default function HobbyMessages(props: {
   hobbySelected: IHobby
+  postedMeessage: {
+    message: string;
+    userName: any;
+    userId: any;
+  }
+  setPostedMeessage: React.Dispatch<React.SetStateAction<{
+    message: string;
+    userName: any;
+    userId: any;
+}>>
+
 }) {
 
   const hobbyApi = new HobbyAPI();
-
-  const [postedMeessage, setPostedMeessage] = useState({
-    message: '',
-    userName: JSON.parse(document.cookie).username,
-    userId: JSON.parse(document.cookie).id,
-    date: new Date()
-  })
 
   const [newMessage, setNewMessage] = useState({
     message: '',
@@ -38,10 +42,14 @@ export default function HobbyMessages(props: {
       newMessage.message,
       tkn
     )
-    setPostedMeessage((prevInfo) => ({
+    props.setPostedMeessage((prevInfo) => ({
       ...prevInfo,
       message: newMessage.message,
     }))
+    setNewMessage({
+      message: '',
+      userId: JSON.parse(document.cookie).id
+    })
   }
 
   return (
@@ -63,20 +71,20 @@ export default function HobbyMessages(props: {
             </div>
             <span className='hobbyMessageBody'>{message.text}</span>
           </div>)}
-          {postedMeessage.message ?
+          {props.postedMeessage.message ?
           <div
           className='hobbyMessage'
         >
           <div className='messageHeader'>
             <NavLink
               className='messageUserLink'
-              to={`/profile/${postedMeessage.userId}`}
+              to={`/profile/${props.postedMeessage.userId}`}
             >
-              <span className='hobbyMessageUser'>{postedMeessage.userName}</span>
+              <span className='hobbyMessageUser'>{props.postedMeessage.userName}</span>
             </NavLink>
-            <span className='hobbyMessageDate'>{`${postedMeessage.date}`}</span>
+            <span className='hobbyMessageDate'>{`${new Date()}`}</span>
           </div>
-          <span className='hobbyMessageBody'>{postedMeessage.message}</span>
+          <span className='hobbyMessageBody'>{props.postedMeessage.message}</span>
         </div> : <div
             className='input-group'
           >

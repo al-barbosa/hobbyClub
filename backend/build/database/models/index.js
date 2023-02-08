@@ -102,6 +102,10 @@ Hobbies.init({
         type: sequelize_1.STRING,
         allowNull: false,
     },
+    img: {
+        type: sequelize_1.INTEGER,
+        allowNull: true,
+    },
     type: {
         type: sequelize_1.STRING,
         allowNull: false,
@@ -198,7 +202,7 @@ Clubs.hasMany(Hobbies, { foreignKey: 'clubId', as: 'hobbies' });
 // UsersClubs.belongsTo(Clubs);
 Users.belongsToMany(Clubs, { through: UsersClubs, as: 'club' });
 Clubs.belongsToMany(Users, { through: UsersClubs, as: 'user' });
-HobbyMessages.belongsTo(Hobbies, { foreignKey: 'hobby_id', as: 'hobby' });
+// HobbyMessages.belongsTo(Hobbies, { foreignKey: 'hobby_id', as: 'hobby' })
 HobbyMessages.belongsTo(Users, { foreignKey: 'user_id', as: 'user' });
 UserMessages.belongsTo(Users, { foreignKey: 'sender_id', as: 'sender' });
 UserMessages.belongsTo(Users, { foreignKey: 'receiver_id', as: 'receiver' });

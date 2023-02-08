@@ -1,18 +1,27 @@
 #hobbiesSection {
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding: 5px;
-  width: 325px;
+  width: 275px;
 }
+
 
 #hobbiesSection * {
   padding: 5px;
   border-radius: 5%;
 }
 
+.selectedHobby {
+  box-shadow: 5px 5px;
+}
+
 .hobbyContainer {
+  align-items: center;
   background-color: #1F4373;
+  display: flex;
+  justify-content: space-around;
 }
 
 .hobbyContainer * {
@@ -20,7 +29,10 @@
 }
 
 .hobbyContainerCurrent {
+  align-items: center;
   background-color: #0656BF;
+  display: flex;
+  justify-content: space-around;
 }
 
 .hobbyContainerCurrent * {
@@ -28,7 +40,6 @@
 }
 
 .nameSection {
-  /* all: unset; */
   align-items: start;
   display: flex;
   gap: 10px;

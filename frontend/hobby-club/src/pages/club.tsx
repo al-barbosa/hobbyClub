@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import Hobbies from "../components/hobbies";
-import Header from "../components/clubHeader";
-import ClubAPI from "../helper/ClubAPI";
-import IClub from "../interfaces/club.interface";
-import HobbyMessages from "../components/hobbiesMessages";
-import IHobby from "../interfaces/hobby.interface";
+import '../styles/ClubPage.css'
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import Hobbies from '../components/hobbies';
+import Header from '../components/clubHeader';
+import ClubAPI from '../helper/ClubAPI';
+import IClub from '../interfaces/club.interface';
+import HobbyMessages from '../components/hobbiesMessages';
+import IHobby from '../interfaces/hobby.interface';
 
 export default function Club() {
 
@@ -22,6 +23,14 @@ export default function Club() {
     img: ''
     } as IHobby);
 
+    const [postedMeessage, setPostedMeessage] = useState({
+      message: '',
+      userName: JSON.parse(document.cookie).username,
+      userId: JSON.parse(document.cookie).id,
+    })
+
+    const [selectedId, setSelectedId] = useState('')
+
   const location = useLocation();
 
   useEffect(() => {
@@ -37,18 +46,33 @@ export default function Club() {
 
   return (
     <div>
-      {clubInfo.name &&
-        <Header
-          clubInfo={clubInfo}
-      />}
-      {clubInfo.hobbies &&
-      <Hobbies
-        hobbyList={clubInfo.hobbies}
-        setHobbySelected={setHobbySelected}
-      />}
-      <HobbyMessages
-        hobbySelected={hobbySelected}
-      />
+      <div className='clubHeaderComponent'>
+        {clubInfo.name &&
+          <Header
+            clubInfo={clubInfo}
+            setHobbySelected={setHobbySelected}
+            setSelectedId={setSelectedId}
+        />}
+      </div>
+      <div className='clubBody'>
+        <div className='clubHobbiesComponent'>
+          {clubInfo.hobbies &&
+          <Hobbies
+            hobbyList={clubInfo.hobbies}
+            setHobbySelected={setHobbySelected}
+            setPostedMeessage={setPostedMeessage}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+          />}
+        </div>
+        <div className='messagesComponent'>
+          <HobbyMessages
+            hobbySelected={hobbySelected}
+            postedMeessage={postedMeessage}
+            setPostedMeessage={setPostedMeessage}
+          />
+        </div>
+      </div>
     </div>
   )
 }

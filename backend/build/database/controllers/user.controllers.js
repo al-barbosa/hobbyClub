@@ -74,6 +74,20 @@ class UserController {
                     .json({ message });
             }
         });
+        this.getMessages = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const messages = yield this.userService.getMessages(req.params.id);
+                return res
+                    .status(200)
+                    .json(messages);
+            }
+            catch (e) {
+                const { code, message } = e;
+                return res
+                    .status(code)
+                    .json({ message });
+            }
+        });
     }
 }
 exports.default = UserController;

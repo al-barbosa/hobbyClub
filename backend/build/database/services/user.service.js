@@ -101,6 +101,10 @@ class UserService {
                 throw new ErrorHelper_1.default('User already joined club', 404);
             yield index_1.UsersClubs.create({ userId, clubId });
         });
+        this.getMessages = (userId) => __awaiter(this, void 0, void 0, function* () {
+            const messages = yield index_1.UserMessages.findAll({ where: { receiver_id: userId } });
+            return messages;
+        });
     }
 }
 exports.default = UserService;
