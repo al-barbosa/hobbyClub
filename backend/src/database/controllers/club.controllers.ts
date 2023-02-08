@@ -60,4 +60,32 @@ export default class ClubController {
         .status(200)
         .json({ message: 'Hobby finished' });
   }
+
+  public getMessages = async (req: Request, res: Response): Promise<Response> => {
+    try{
+      const clubMessages = await this.clubService.getMessages(req.params.id);
+      return res
+        .status(200)
+        .json(clubMessages);
+    } catch (e) {
+      const { code, message } = e as IError;
+      return res
+        .status(code)
+        .json({ message });
+    };
+  };
+
+  public postMessage = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      await this.clubService.postMessage(req.params.id, req.body.userId, req.body.text);
+      return res
+        .status(200)
+        .json({ message: 'Message posted' });
+    } catch (e) {
+      const { code, message } = e as IError;
+      return res
+        .status(code)
+        .json({ message });
+    }
+  };
 }

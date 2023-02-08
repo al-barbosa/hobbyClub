@@ -1,7 +1,7 @@
 import ClubValidation from "../helper/ClubValidation";
 import ErrorHandler from "../helper/ErrorHelper";
 import { IClub } from "../interfaces/club.interface";
-import { Clubs, Hobbies, Users, UsersClubs } from "../models";
+import { ClubMessages, Clubs, Hobbies, Users, UsersClubs } from "../models";
 import { ValidationResult } from 'joi';
 import IHobby from "../interfaces/hobby.interface";
 import HobbyValidation from "../helper/Hobbyalidation";
@@ -18,7 +18,7 @@ export default class ClubService {
     });
     return allClubs;
   }
-  
+
   public getClub = async (id: string): Promise<Clubs> => {
     const searchedClub = await Clubs.findByPk(id, {
       include: [{ model: Users, as: 'admin' },
@@ -54,4 +54,21 @@ export default class ClubService {
   public finishHobbie = async (clubId: string, hobbyId: string) => {
     const finishedHobby = await Hobbies.update({ finished: true }, { where: { id: hobbyId, clubId } });
   }
+
+  public getMessages = async (id: string): Promise<ClubMessages[]> => {
+    const clubMessages = await ClubMessages.findAll({
+      include: 'user',
+      where: { club_id: id },
+    });
+    if (!clubMessages) throw new ErrorHandler('Club not found', 404);
+    return clubMessages;
+  }
+
+  public postMessage = async (hobbyId: string, userId: string, text: string) => {
+    await ClubMessages.create({
+      hobby_id: hobbyId,
+      user_id: userId,
+      text
+    })
+  };
 }

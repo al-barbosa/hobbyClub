@@ -24,7 +24,7 @@ export default function profileHeader(props: {
 
   return (
     <div>
-      <button onClick={cleanHobbySelected}>
+      <button onClick={cleanHobbySelected} >
         <h1 id='clubName'>{props.clubInfo.name}</h1>
       </button>
       <h3 id='clubAdmin'>Club admin: <NavLink

@@ -36,6 +36,13 @@ class HobbyMessages extends Model {
   declare user_id: number;
 }
 
+class ClubMessages extends Model {
+  declare id: number;
+  declare text: string;
+  declare club_id: number;
+  declare user_id: number;
+}
+
 class UserMessages extends Model {
   declare id: number;
   declare text: string;
@@ -155,6 +162,32 @@ HobbyMessages.init({
   timestamps: true,
 });
 
+ClubMessages.init({
+  id: {
+    type: INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  text: {
+    type: STRING,
+    allowNull: false,
+  },
+  club_id: {
+    type: INTEGER,
+    allowNull: false,
+  },
+  user_id: {
+    type: INTEGER,
+    allowNull: false,
+  },
+}, {
+  underscored: true,
+  sequelize: db,
+  modelName: 'clubMessages',
+  timestamps: true,
+});
+
 UserMessages.init({
   id: {
     type: INTEGER,
@@ -221,9 +254,11 @@ Clubs.belongsToMany(Users, { through: UsersClubs, as: 'user' })
 // HobbyMessages.belongsTo(Hobbies, { foreignKey: 'hobby_id', as: 'hobby' })
 HobbyMessages.belongsTo(Users, { foreignKey: 'user_id', as: 'user' })
 
+ClubMessages.belongsTo(Users, { foreignKey: 'user_id', as: 'user' })
+
 UserMessages.belongsTo(Users, { foreignKey: 'sender_id', as: 'sender' })
 UserMessages.belongsTo(Users, { foreignKey: 'receiver_id', as: 'receiver' })
 
 
 
-export { Users, Clubs, Hobbies, UsersClubs, HobbyMessages, UserMessages }
+export { Users, Clubs, Hobbies, UsersClubs, HobbyMessages, UserMessages, ClubMessages }

@@ -49,7 +49,7 @@ export default class UserController {
         .status(code)
         .json({ message });
     }
-  }
+  };
 
   public joinClub = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -63,7 +63,7 @@ export default class UserController {
         .status(code)
         .json({ message });
     }
-  }
+  };
 
   public getMessages = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -77,5 +77,5 @@ export default class UserController {
         .status(code)
         .json({ message });
     }
-  }
+  };
 }
