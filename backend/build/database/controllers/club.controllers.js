@@ -73,6 +73,35 @@ class ClubController {
                 .status(200)
                 .json({ message: 'Hobby finished' });
         });
+        this.getMessages = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const clubMessages = yield this.clubService.getMessages(req.params.id);
+                return res
+                    .status(200)
+                    .json(clubMessages);
+            }
+            catch (e) {
+                const { code, message } = e;
+                return res
+                    .status(code)
+                    .json({ message });
+            }
+            ;
+        });
+        this.postMessage = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.clubService.postMessage(req.params.id, req.body.userId, req.body.text);
+                return res
+                    .status(200)
+                    .json({ message: 'Message posted' });
+            }
+            catch (e) {
+                const { code, message } = e;
+                return res
+                    .status(code)
+                    .json({ message });
+            }
+        });
     }
 }
 exports.default = ClubController;

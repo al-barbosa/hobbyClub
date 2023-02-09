@@ -1,7 +1,7 @@
 import '../styles/Messages.css'
-import IMessage from "../interfaces/message.interface";
+import { IUserMessage } from '../interfaces/message.interface';
 
-export default function Message(props: {messages: IMessage[]}) {
+export default function Message(props: {messages: IUserMessage[]}) {
   return (
     <div id='messageWindow'>
       <h3 id='messageHeader'>Mensagens:</h3>

@@ -3,9 +3,20 @@ import { NavLink } from "react-router-dom"
 import IHobby from "../interfaces/hobby.interface"
 import { useState } from 'react'
 import HobbyAPI from '../helper/HobbyAPI'
+import { IClubMessage } from '../interfaces/message.interface'
+import ClubAPI from '../helper/ClubAPI'
 
 export default function HobbyMessages(props: {
   hobbySelected: IHobby
+  clubId: number
+  newMessage: {
+    message: string;
+    userId: any;
+  }
+  setNewMessage: React.Dispatch<React.SetStateAction<{
+    message: string;
+    userId: any;
+  }>>
   postedMeessage: {
     message: string;
     userName: any;
@@ -16,10 +27,12 @@ export default function HobbyMessages(props: {
     userName: any;
     userId: any;
 }>>
-
+  clubMessages: IClubMessage[]
+  setClubMessages: React.Dispatch<React.SetStateAction<IClubMessage[]>>
 }) {
 
   const hobbyApi = new HobbyAPI();
+  const clubApi = new ClubAPI();
 
   const [newMessage, setNewMessage] = useState({
     message: '',
@@ -42,10 +55,25 @@ export default function HobbyMessages(props: {
       newMessage.message,
       tkn
     )
-    props.setPostedMeessage((prevInfo) => ({
-      ...prevInfo,
-      message: newMessage.message,
-    }))
+    const nHoobyMessage = await hobbyApi.getHobby(`${props.hobbySelected?.id}`)
+    props.setPostedMeessage(nHoobyMessage.messages)
+    setNewMessage({
+      message: '',
+      userId: JSON.parse(document.cookie).id
+    })
+    console.log(props.postedMeessage)
+  }
+
+  const handleSubmitGeneral = async() => {
+    const tkn = JSON.parse(document.cookie).token;
+    await clubApi.postMessage(
+      `${props.clubId}`,
+      newMessage.userId,
+      newMessage.message,
+      tkn
+    )
+    const nClubMessages = await clubApi.getMessages(`${props.clubId}`);
+    props.setClubMessages(nClubMessages)
     setNewMessage({
       message: '',
       userId: JSON.parse(document.cookie).id
@@ -107,7 +135,58 @@ export default function HobbyMessages(props: {
             Post
           </button></div>}
         </div> :
-        <span>Escolha um hobby</span>}
+        <div className='hobbyMessageBody'>
+        {props.clubMessages.map((message, index) => <div
+          key={index}
+          className='hobbyMessage'
+        >
+          <div className='messageHeader'>
+            <NavLink
+              className='messageUserLink'
+              to={`/profile/${message.user.id}`}
+            >
+              <span className='hobbyMessageUser'>{message.user.username}</span>
+            </NavLink>
+            <span className='hobbyMessageDate'>{message.createdAt}</span>
+          </div>
+          <span className='hobbyMessageBody'>{message.text}</span>
+        </div>)}
+        {props.postedMeessage.message ?
+        <div
+        className='hobbyMessage'
+      >
+        <div className='messageHeader'>
+          <NavLink
+            className='messageUserLink'
+            to={`/profile/${props.postedMeessage.userId}`}
+          >
+            <span className='hobbyMessageUser'>{props.postedMeessage.userName}</span>
+          </NavLink>
+          <span className='hobbyMessageDate'>{`${new Date()}`}</span>
+        </div>
+        <span className='hobbyMessageBody'>{props.postedMeessage.message}</span>
+      </div> : <div
+          className='input-group'
+        >
+          <textarea
+            className='form-control'
+            aria-label='With textarea'
+            name='message'
+            value={newMessage.message}
+            onChange={handleNewMessage}
+          />
+        <button
+          className='btn btn-outline-secondary'
+          type='button'
+          id='button-addon2'
+          disabled={
+            newMessage.message ? false : true
+          }
+          onClick={handleSubmitGeneral}
+        >
+          Post
+        </button></div>}
+      </div>}
     </div>
   )
 }

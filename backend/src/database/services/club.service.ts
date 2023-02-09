@@ -64,9 +64,9 @@ export default class ClubService {
     return clubMessages;
   }
 
-  public postMessage = async (hobbyId: string, userId: string, text: string) => {
+  public postMessage = async (clubId: string, userId: string, text: string) => {
     await ClubMessages.create({
-      hobby_id: hobbyId,
+      club_id: clubId,
       user_id: userId,
       text
     })

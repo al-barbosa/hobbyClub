@@ -1,4 +1,4 @@
-import IMessage from "./message.interface";
+import IHobbyMessage from "./message.interface";
 
 export default interface IHobby {
   clubId: number,
@@ -9,5 +9,5 @@ export default interface IHobby {
   type: string,
   updatedAt: string,
   img: string,
-  messages?: IMessage[]
+  messages?: IHobbyMessage[]
 }

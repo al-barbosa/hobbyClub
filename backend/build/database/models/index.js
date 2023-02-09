@@ -22,7 +22,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserMessages = exports.HobbyMessages = exports.UsersClubs = exports.Hobbies = exports.Clubs = exports.Users = void 0;
+exports.ClubMessages = exports.UserMessages = exports.HobbyMessages = exports.UsersClubs = exports.Hobbies = exports.Clubs = exports.Users = void 0;
 const sequelize_1 = require("sequelize");
 const config = __importStar(require("../config/database"));
 const _1 = __importDefault(require("."));
@@ -42,6 +42,9 @@ exports.UsersClubs = UsersClubs;
 class HobbyMessages extends sequelize_1.Model {
 }
 exports.HobbyMessages = HobbyMessages;
+class ClubMessages extends sequelize_1.Model {
+}
+exports.ClubMessages = ClubMessages;
 class UserMessages extends sequelize_1.Model {
 }
 exports.UserMessages = UserMessages;
@@ -151,6 +154,31 @@ HobbyMessages.init({
     modelName: 'hobbyMessages',
     timestamps: true,
 });
+ClubMessages.init({
+    id: {
+        type: sequelize_1.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    text: {
+        type: sequelize_1.STRING,
+        allowNull: false,
+    },
+    club_id: {
+        type: sequelize_1.INTEGER,
+        allowNull: false,
+    },
+    user_id: {
+        type: sequelize_1.INTEGER,
+        allowNull: false,
+    },
+}, {
+    underscored: true,
+    sequelize: _1.default,
+    modelName: 'clubMessages',
+    timestamps: true,
+});
 UserMessages.init({
     id: {
         type: sequelize_1.INTEGER,
@@ -204,5 +232,6 @@ Users.belongsToMany(Clubs, { through: UsersClubs, as: 'club' });
 Clubs.belongsToMany(Users, { through: UsersClubs, as: 'user' });
 // HobbyMessages.belongsTo(Hobbies, { foreignKey: 'hobby_id', as: 'hobby' })
 HobbyMessages.belongsTo(Users, { foreignKey: 'user_id', as: 'user' });
+ClubMessages.belongsTo(Users, { foreignKey: 'user_id', as: 'user' });
 UserMessages.belongsTo(Users, { foreignKey: 'sender_id', as: 'sender' });
 UserMessages.belongsTo(Users, { foreignKey: 'receiver_id', as: 'receiver' });

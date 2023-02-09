@@ -5,12 +5,12 @@ import mail from '../icons/mail.png'
 import magnifyingGlass from '../icons/magnifyingGlass.png'
 import React from 'react';
 import { IUser } from '../interfaces/user.interface';
-import IMessage from '../interfaces/message.interface';
+import { IUserMessage } from '../interfaces/message.interface';
 // import { useNavigate, NavigateFunction } from 'react-router-dom';
 
 export default function Header(props: {
   userInfo: IUser,
-  messages: IMessage[],
+  messages: IUserMessage[],
   setShowMessages: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
 

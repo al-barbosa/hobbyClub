@@ -11,7 +11,8 @@ clubRoute.get('/', clubController.getAll);
 clubRoute.post('/', tokenHandler.validateToken, clubController.createClub);
 clubRoute.get('/:id', clubController.getClub);
 clubRoute.get('/:id/messages', clubController.getMessages);
-clubRoute.post('/:id/messages', clubController.getMessages);
+// clubRoute.post('/:id/messages', tokenHandler.validateToken, clubController.postMessage);
+clubRoute.post('/:id/messages', clubController.postMessage);
 clubRoute.post('/:id', tokenHandler.validateToken, clubController.createHobby);
 clubRoute.patch('/:id/:hobby', tokenHandler.validateToken, clubController.finishHobby);
 

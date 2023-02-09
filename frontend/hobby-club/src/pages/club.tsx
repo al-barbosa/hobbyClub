@@ -7,10 +7,13 @@ import ClubAPI from '../helper/ClubAPI';
 import IClub from '../interfaces/club.interface';
 import HobbyMessages from '../components/hobbiesMessages';
 import IHobby from '../interfaces/hobby.interface';
+import { IClubMessage } from '../interfaces/message.interface';
 
 export default function Club() {
 
   const [clubInfo, setClubInfo] = useState({} as IClub);
+
+  const [clubMessages, setClubMessages] = useState([] as IClubMessage[])
 
   const [hobbySelected, setHobbySelected] = useState({
     clubId: 0,
@@ -23,13 +26,18 @@ export default function Club() {
     img: ''
     } as IHobby);
 
-    const [postedMeessage, setPostedMeessage] = useState({
-      message: '',
-      userName: JSON.parse(document.cookie).username,
-      userId: JSON.parse(document.cookie).id,
-    })
+  const [postedMeessage, setPostedMeessage] = useState({
+    message: '',
+    userName: JSON.parse(document.cookie).username,
+    userId: JSON.parse(document.cookie).id,
+  })
 
-    const [selectedId, setSelectedId] = useState('')
+  const [selectedId, setSelectedId] = useState('')
+
+  const [newMessage, setNewMessage] = useState({
+    message: '',
+    userId: JSON.parse(document.cookie).id
+  })
 
   const location = useLocation();
 
@@ -40,6 +48,8 @@ export default function Club() {
       const clubId = pathName[2];
       const clubInfo = await clubApi.getInfo(clubId);
       setClubInfo(clubInfo);
+      const retrivedMessages = await clubApi.getMessages(clubId)
+      setClubMessages(retrivedMessages)
     }
     getClubInfo();
   }, [location.pathname]);
@@ -70,6 +80,11 @@ export default function Club() {
             hobbySelected={hobbySelected}
             postedMeessage={postedMeessage}
             setPostedMeessage={setPostedMeessage}
+            clubMessages={clubMessages}
+            setClubMessages={setClubMessages}
+            newMessage={newMessage}
+            setNewMessage={setNewMessage}
+            clubId={clubInfo.id}
           />
         </div>
       </div>

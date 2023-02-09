@@ -64,6 +64,22 @@ class ClubService {
         this.finishHobbie = (clubId, hobbyId) => __awaiter(this, void 0, void 0, function* () {
             const finishedHobby = yield models_1.Hobbies.update({ finished: true }, { where: { id: hobbyId, clubId } });
         });
+        this.getMessages = (id) => __awaiter(this, void 0, void 0, function* () {
+            const clubMessages = yield models_1.ClubMessages.findAll({
+                include: 'user',
+                where: { club_id: id },
+            });
+            if (!clubMessages)
+                throw new ErrorHelper_1.default('Club not found', 404);
+            return clubMessages;
+        });
+        this.postMessage = (clubId, userId, text) => __awaiter(this, void 0, void 0, function* () {
+            yield models_1.ClubMessages.create({
+                club_id: clubId,
+                user_id: userId,
+                text
+            });
+        });
     }
 }
 exports.default = ClubService;

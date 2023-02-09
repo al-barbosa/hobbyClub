@@ -31,7 +31,8 @@ export default class ClubAPI {
     text: string,
     token: string
   ) => {
-    const URL = `/hobby/${clubId}/message`;
+    const URL = `/club/${clubId}/messages`;
+
     const response = await fetch(URL, {
       method: "POST",
       headers: {
