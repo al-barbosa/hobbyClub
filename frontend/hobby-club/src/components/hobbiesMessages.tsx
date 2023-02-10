@@ -55,13 +55,14 @@ export default function HobbyMessages(props: {
       newMessage.message,
       tkn
     )
-    const nHoobyMessage = await hobbyApi.getHobby(`${props.hobbySelected?.id}`)
-    props.setPostedMeessage(nHoobyMessage.messages)
+    props.setPostedMeessage((prevInfo) => ({
+      ...prevInfo,
+      message: newMessage.message,
+    }))
     setNewMessage({
       message: '',
       userId: JSON.parse(document.cookie).id
     })
-    console.log(props.postedMeessage)
   }
 
   const handleSubmitGeneral = async() => {
