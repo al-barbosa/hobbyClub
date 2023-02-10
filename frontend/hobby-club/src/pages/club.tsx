@@ -8,6 +8,7 @@ import IClub from '../interfaces/club.interface';
 import HobbyMessages from '../components/hobbiesMessages';
 import IHobby from '../interfaces/hobby.interface';
 import { IClubMessage } from '../interfaces/message.interface';
+import ClubMembers from '../components/clubMembers';
 
 export default function Club() {
 
@@ -86,6 +87,12 @@ export default function Club() {
             setNewMessage={setNewMessage}
             clubId={clubInfo.id}
           />
+        </div>
+        <div className='membersList'>
+          {clubInfo.user &&
+          <ClubMembers
+            userList={clubInfo.user}
+          />}
         </div>
       </div>
     </div>

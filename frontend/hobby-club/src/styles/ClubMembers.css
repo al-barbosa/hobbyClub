@@ -1,0 +1,11 @@
+#membersSection {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0px 0px 10px;
+  position: fixed;
+}
+
+.clubMemberName {
+  font-size: smaller;
+}

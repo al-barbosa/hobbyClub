@@ -6,4 +6,5 @@ export default interface IClub {
   name: string,
   hobbies: IHobby[],
   admin: IUser,
+  user: IUser[],
 }
