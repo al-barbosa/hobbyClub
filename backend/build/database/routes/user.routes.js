@@ -32,6 +32,7 @@ userRoute.get('/', userControllers.getAll);
 userRoute.get('/:id', tokenHandler.validateToken, userControllers.getUser);
 userRoute.get('/:id/messages', tokenHandler.validateToken, userControllers.getMessages);
 userRoute.post('/:id/:club', tokenHandler.validateToken, userControllers.joinClub);
+userRoute.delete('/:id/:club', tokenHandler.validateToken, userControllers.leftClub);
 userRoute.post('/', userControllers.createUser);
 userRoute.post('/login', userControllers.login);
 exports.default = userRoute;

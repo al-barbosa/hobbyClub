@@ -10,10 +10,9 @@
   background-color: #024059;
 }
 
-.icons {
+.leftHeader {
   display: flex;
-  gap: 20px;
-  padding-top: 7px;
+  flex-direction: column;
 }
 
 button {

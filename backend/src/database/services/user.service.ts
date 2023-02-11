@@ -73,9 +73,17 @@ export default class UserService {
 
   public joinClub = async (userId: string, clubId: string): Promise<void> => {
     const checkUserClub = await UsersClubs.findOne({ where: { userId, clubId }})
-    if (checkUserClub) throw new ErrorHandler('User already joined club', 404);
+    // if (checkUserClub) throw new ErrorHandler('User already joined club', 404);
 
     await UsersClubs.create({ userId, clubId });
+  }
+
+  public leftClub = async (userId: string, clubId: string): Promise<void> => {
+    const checkUserClub = await UsersClubs.findOne({ where: { userId, clubId }})
+    // if (checkUserClub) throw new ErrorHandler('User did not joined club', 404);
+    console.log('check')
+
+    await UsersClubs.destroy({ where: { userId, clubId }});
   }
 
   public getMessages = async (userId: string): Promise<UserMessages[]> => {

@@ -65,6 +65,20 @@ export default class UserController {
     }
   };
 
+  public leftClub = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      await this.userService.leftClub(req.params.id, req.params.club);
+      return res
+        .status(200)
+        .json({ message: `User ${req.params.id} has left club ${req.params.club}` });
+    } catch (e) {
+      const { code, message } = e as IError;
+      return res
+        .status(code)
+        .json({ message });
+    }
+  };
+
   public getMessages = async (req: Request, res: Response): Promise<Response> => {
     try {
       const messages = await this.userService.getMessages(req.params.id);

@@ -5,7 +5,7 @@
 
 .clubBody {
   display: flex;
-  padding-top: 130px;
+  padding-top: 170px;
 }
 
 .clubHobbiesComponent {
@@ -18,4 +18,5 @@
 .messagesComponent{
   padding-left: 290px;
   padding-bottom: 20px;
+  width: 900px;
 }

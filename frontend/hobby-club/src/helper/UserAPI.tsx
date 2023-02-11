@@ -68,4 +68,32 @@ export default class UserAPI {
     const data = await response.json();
     return data;
   }
+
+  public async joinClub(userId: string, clubId: string, token: string) {
+    const URL = `/user/${userId}/${clubId}`;
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    });
+    const data = await response.json();
+    return data;
+  }
+
+  public async leftClub(userId: string, clubId: string, token: string) {
+    const URL = `/user/${userId}/${clubId}`;
+    const response = await fetch(URL, {
+      method: "DELETE",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    });
+    const data = await response.json();
+    return data;
+  }
 };

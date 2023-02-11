@@ -60,7 +60,8 @@ export default function Club() {
       setClubMessages(retrivedMessages)
     }
     getClubInfo();
-  }, [location.pathname]);
+    console.log('oi')
+  }, [location.pathname, isMember]);
 
   return (
     <div>
@@ -70,6 +71,9 @@ export default function Club() {
             clubInfo={clubInfo}
             setHobbySelected={setHobbySelected}
             setSelectedId={setSelectedId}
+            isMember={isMember}
+            clubId={`${clubInfo.id}`}
+            setIsMember={setIsMember}
         />}
       </div>
       <div className='clubBody'>

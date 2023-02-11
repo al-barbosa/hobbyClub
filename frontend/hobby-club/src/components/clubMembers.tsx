@@ -6,7 +6,10 @@ export default function ClubMembers(props: { userList: IUser[] }) {
   return (
     <div id='membersSection'>
       <h2>Club members:</h2>
-      {props.userList.map((user, index) => <div
+      {props.userList
+        .sort((a, b) =>
+        a.username.localeCompare(b.username))
+        .map((user, index) => <div
           className='userNameSection'
           key={index}
         >

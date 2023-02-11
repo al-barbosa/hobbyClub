@@ -74,6 +74,20 @@ class UserController {
                     .json({ message });
             }
         });
+        this.leftClub = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.userService.leftClub(req.params.id, req.params.club);
+                return res
+                    .status(200)
+                    .json({ message: `User ${req.params.id} has left club ${req.params.club}` });
+            }
+            catch (e) {
+                const { code, message } = e;
+                return res
+                    .status(code)
+                    .json({ message });
+            }
+        });
         this.getMessages = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const messages = yield this.userService.getMessages(req.params.id);
