@@ -14,7 +14,9 @@ export default function Club() {
 
   const [clubInfo, setClubInfo] = useState({} as IClub);
 
-  const [clubMessages, setClubMessages] = useState([] as IClubMessage[])
+  const [clubMessages, setClubMessages] = useState([] as IClubMessage[]);
+
+  const [isMember, setIsMember] = useState(false);
 
   const [hobbySelected, setHobbySelected] = useState({
     clubId: 0,
@@ -31,24 +33,29 @@ export default function Club() {
     message: '',
     userName: JSON.parse(document.cookie).username,
     userId: JSON.parse(document.cookie).id,
-  })
+  });
 
   const [selectedId, setSelectedId] = useState('')
 
   const [newMessage, setNewMessage] = useState({
     message: '',
     userId: JSON.parse(document.cookie).id
-  })
+  });
 
   const location = useLocation();
 
   useEffect(() => {
     const clubApi = new ClubAPI();
-    const getClubInfo = async() => {
+    const getClubInfo = async () => {
       const pathName = location.pathname.split('/');
       const clubId = pathName[2];
-      const clubInfo = await clubApi.getInfo(clubId);
-      setClubInfo(clubInfo);
+      const retrivedClubInfo = await clubApi.getInfo(clubId);
+      setClubInfo(retrivedClubInfo);
+
+      const userId = JSON.parse(document.cookie).id;
+      const filteredList = (retrivedClubInfo as IClub).user.some((user) => user.id === userId);
+      if (filteredList) setIsMember(true)
+
       const retrivedMessages = await clubApi.getMessages(clubId)
       setClubMessages(retrivedMessages)
     }
@@ -86,6 +93,7 @@ export default function Club() {
             newMessage={newMessage}
             setNewMessage={setNewMessage}
             clubId={clubInfo.id}
+            isMember={isMember}
           />
         </div>
         <div className='membersList'>

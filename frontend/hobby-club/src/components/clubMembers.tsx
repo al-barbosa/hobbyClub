@@ -6,7 +6,10 @@ export default function ClubMembers(props: { userList: IUser[] }) {
   return (
     <div id='membersSection'>
       <h2>Club members:</h2>
-      {props.userList.map((user) => <div className='userNameSection'>
+      {props.userList.map((user, index) => <div
+          className='userNameSection'
+          key={index}
+        >
         <NavLink
           className='userLink'
           to={`/profile/${user.id}`}

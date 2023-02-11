@@ -29,6 +29,7 @@ export default function HobbyMessages(props: {
 }>>
   clubMessages: IClubMessage[]
   setClubMessages: React.Dispatch<React.SetStateAction<IClubMessage[]>>
+  isMember: boolean
 }) {
 
   const hobbyApi = new HobbyAPI();
@@ -114,7 +115,7 @@ export default function HobbyMessages(props: {
             <span className='hobbyMessageDate'>{`${new Date()}`}</span>
           </div>
           <span className='hobbyMessageBody'>{props.postedMeessage.message}</span>
-        </div> : <div
+        </div> : (props.isMember && <div
             className='input-group'
           >
             <textarea
@@ -134,7 +135,7 @@ export default function HobbyMessages(props: {
             onClick={handleSubmit}
           >
             Post
-          </button></div>}
+          </button></div>)}
         </div> :
         <div className='hobbyMessageBody'>
         {props.clubMessages.map((message, index) => <div
@@ -166,7 +167,7 @@ export default function HobbyMessages(props: {
           <span className='hobbyMessageDate'>{`${new Date()}`}</span>
         </div>
         <span className='hobbyMessageBody'>{props.postedMeessage.message}</span>
-      </div> : <div
+      </div> : (props.isMember && <div
           className='input-group'
         >
           <textarea
@@ -186,7 +187,7 @@ export default function HobbyMessages(props: {
           onClick={handleSubmitGeneral}
         >
           Post
-        </button></div>}
+        </button></div>)}
       </div>}
     </div>
   )
