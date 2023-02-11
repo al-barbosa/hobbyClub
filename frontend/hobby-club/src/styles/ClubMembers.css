@@ -1,9 +1,16 @@
 #membersSection {
-  overflow-y: scroll;
+  background-color: #024059;
+  box-shadow: 5px 5px 5px #1F4373;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  padding: 5px 0px 0px 10px;
+  overflow-y: scroll;
+  padding: 5px 10px 0px 10px;
   position: fixed;
+}
+
+#membersSection * {
+  background-color: #024059;
 }
 
 .clubMemberName {
