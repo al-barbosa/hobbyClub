@@ -3,7 +3,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('clubs', [
       {
-        name: 'Clube de Leituras Marxistas',
+        name: 'Clube do Professor Tolkien',
         admin_id: 1,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
         updated_at: Sequelize.literal('CURRENT_TIMESTAMP'),

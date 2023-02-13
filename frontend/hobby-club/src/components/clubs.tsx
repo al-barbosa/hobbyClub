@@ -10,7 +10,10 @@ export default function Clubs(props: { userClubs: IClub[] }) {
     <div id='clubPage'>
       <img className='clubIcon' src={ meeting } alt='Icon for club list' />
       <div className='clubList'>
-        {props.userClubs.map((club, index) => <div className='userClub' key={index}>
+        {props.userClubs
+        .sort((a, b) =>
+        a.name.localeCompare(b.name))
+        .map((club, index) => <div className='userClub' key={index}>
           <NavLink
             className='clubLink'
             id={`${club.id}`}

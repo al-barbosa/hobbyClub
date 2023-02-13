@@ -97,15 +97,13 @@ class UserService {
         });
         this.joinClub = (userId, clubId) => __awaiter(this, void 0, void 0, function* () {
             const checkUserClub = yield index_1.UsersClubs.findOne({ where: { userId, clubId } });
-            if (checkUserClub)
-                throw new ErrorHelper_1.default('User already joined club', 404);
+            // if (checkUserClub) throw new ErrorHandler('User already joined club', 404);
             yield index_1.UsersClubs.create({ userId, clubId });
         });
         this.leftClub = (userId, clubId) => __awaiter(this, void 0, void 0, function* () {
             const checkUserClub = yield index_1.UsersClubs.findOne({ where: { userId, clubId } });
-            console.log(checkUserClub);
-            if (checkUserClub)
-                throw new ErrorHelper_1.default('User did not joined club', 404);
+            // if (checkUserClub) throw new ErrorHandler('User did not joined club', 404);
+            console.log('check');
             yield index_1.UsersClubs.destroy({ where: { userId, clubId } });
         });
         this.getMessages = (userId) => __awaiter(this, void 0, void 0, function* () {

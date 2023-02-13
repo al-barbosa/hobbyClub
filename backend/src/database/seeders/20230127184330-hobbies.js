@@ -4,18 +4,18 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('hobbies', [
       {
-        name: 'O Capital',
+        name: 'O Senhor dos Anéis: A Sociedade do Anel',
         type: 'book',
-        img: 'https://covers.openlibrary.org/b/isbn/8575595482-L.jpg',
+        img: 'https://ia601401.us.archive.org/view_archive.php?archive=/32/items/l_covers_0008/l_covers_0008_17.tar&file=0008174367-L.jpg',
         finished: false,
         club_id: 1,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
         updated_at: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       {
-        name: 'Manifesto do Partido Comunista',
+        name: 'O Hobbit',
         type: 'book',
-        img: 'https://covers.openlibrary.org/b/isbn/8563560360-L.jpg',
+        img: 'https://covers.openlibrary.org/b/isbn/8595084742-L.jpg',
         finished: true,
         club_id: 1,
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
