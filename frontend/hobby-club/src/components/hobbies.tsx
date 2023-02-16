@@ -1,10 +1,12 @@
 import '../styles/Hobbies.css';
 import book from '../icons/book.png';
+import end from '../icons/end.png'
 import camera from '../icons/camera.png';
 import joystick from '../icons/joystick.png';
 import IHobby from "../interfaces/hobby.interface";
 import notFound from '../icons/notFound.png'
 import HobbyAPI from '../helper/HobbyAPI';
+import ClubAPI from '../helper/ClubAPI';
 
 export default function Hobbies(props: {
   hobbyList: IHobby[],
@@ -16,6 +18,7 @@ export default function Hobbies(props: {
   }>>
   selectedId: string;
   setSelectedId: React.Dispatch<React.SetStateAction<string>>
+  finishHobbie: (hobbyId: number) => Promise<void>
 }) {
 
   const showMessages = async (hobbyId: string) => {
@@ -32,27 +35,42 @@ export default function Hobbies(props: {
 
   const finished = (hobby: IHobby) => hobby.finished ? 'hobbyContainer' : 'hobbyContainerCurrent'
   const selected = (hobby: IHobby) => `${hobby.id}` === props.selectedId ? 'selectedHobby' : ''
+  // const finishHobbie = async (hobbyId: number) => {
+  //   const clubApi = new ClubAPI();
+  //   await clubApi.endHobbie(props.clubId, hobbyId, JSON.parse(document.cookie).token);
+  // }
 
   return (
     <div id='hobbiesSection'>
-      {props.hobbyList.map((hobby, index) => <button
-        key={index}
-        className={`${finished(hobby)} ${selected(hobby)}`}
-        onClick={() => showMessages(`${hobby.id}`)}
-      >
-        {hobby.type === 'movie' ?
-          <img src={camera} alt='Movie icon' className='typeIcon' /> :
-          (hobby.type === 'book' ?
-            <img src={book} alt='Book icon' className='typeIcon' /> :
-            <img src={joystick} alt='Game icon' className='typeIcon' />)}
-        <div className='nameAndImage'>
-          <h3 className='hobbyName'>{hobby.name}</h3>
-          {hobby.img !== null ?
-            <img src={hobby.img} alt={hobby.name} className='hobbyCover' /> :
-            <img src={notFound} alt={hobby.name} className='hobbyCover' />
-          }
-        </div>
-      </button>)}
+      {props.hobbyList
+        .map((hobby, index) => <div key={index}>
+          {!hobby.finished && <button
+            onClick={() => props.finishHobbie(hobby.id)}
+          >
+            <img src={end} alt='End icon' className='typeIcon' />
+            <span>End current hobby</span>
+          </button>}
+          <button
+            key={index}
+            className={`${finished(hobby)} ${selected(hobby)}`}
+            onClick={() => showMessages(`${hobby.id}`)}
+          >
+            {hobby.type === 'movie' ?
+              <img src={camera} alt='Movie icon' className='typeIcon' /> :
+              (hobby.type === 'book' ?
+                <img src={book} alt='Book icon' className='typeIcon' /> :
+                <img src={joystick} alt='Game icon' className='typeIcon' />)}
+            <div className='nameAndImage'>
+              <div className='hobbyNameHeader'>
+                <h3 className='hobbyName'>{hobby.name}</h3>
+              </div>
+              {hobby.img !== null ?
+                <img src={hobby.img} alt={hobby.name} className='hobbyCover' /> :
+                <img src={notFound} alt={hobby.name} className='hobbyCover' />
+              }
+            </div>
+          </button>
+        </div>)}
     </div>
   )
 }

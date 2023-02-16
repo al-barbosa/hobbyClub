@@ -48,4 +48,24 @@ export default class ClubAPI {
     const data = await response.json();
     return data;
   }
+
+  public endHobbie = async (
+    clubId: number,
+    hobbieId: number,
+    token: string
+  ) => {
+    const URL = `/club/${clubId}/${hobbieId}`;
+
+    const response = await fetch(URL, {
+      method: "PATCH",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    });
+    const data = await response.json();
+    return data;
+  }
 }
+

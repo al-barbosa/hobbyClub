@@ -7,7 +7,6 @@ import Header from '../components/profileHeader';
 import Clubs from '../components/clubs';
 // import Message from '../components/messages';
 
-
 export default function Profile() {
   const navigate = useNavigate();
 

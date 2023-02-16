@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
 import UserAPI from '../helper/UserAPI';
 
-
 export default function Login() {
   const userApi = new UserAPI();
   const navigate = useNavigate();

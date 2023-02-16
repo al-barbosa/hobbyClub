@@ -18,6 +18,8 @@ export default function Club() {
 
   const [isMember, setIsMember] = useState(false);
 
+  const [rerender, setRerender] = useState(false);
+
   const [hobbySelected, setHobbySelected] = useState({
     clubId: 0,
     createdAt: '',
@@ -44,6 +46,12 @@ export default function Club() {
 
   const location = useLocation();
 
+  const finishHobbie = async (hobbyId: number) => {
+    const clubApi = new ClubAPI();
+    await clubApi.endHobbie(clubInfo.id, hobbyId, JSON.parse(document.cookie).token);
+    setRerender(!rerender);
+  }
+
   useEffect(() => {
     const clubApi = new ClubAPI();
     const getClubInfo = async () => {
@@ -61,7 +69,7 @@ export default function Club() {
     }
     getClubInfo();
     console.log('oi')
-  }, [location.pathname, isMember]);
+  }, [location.pathname, isMember, rerender]);
 
   return (
     <div>
@@ -85,6 +93,7 @@ export default function Club() {
             setPostedMeessage={setPostedMeessage}
             selectedId={selectedId}
             setSelectedId={setSelectedId}
+            finishHobbie={finishHobbie}
           />}
         </div>
         <div className='messagesComponent'>
