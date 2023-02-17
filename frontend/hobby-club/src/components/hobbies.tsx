@@ -10,16 +10,17 @@ import HobbyAPI from '../helper/HobbyAPI';
 import MovieAPI from '../helper/ExternalAPI'; 
 
 export default function Hobbies(props: {
-  hobbyList: IHobby[],
   setHobbySelected: React.Dispatch<React.SetStateAction<IHobby>>,
   setPostedMeessage: React.Dispatch<React.SetStateAction<{
     message: string;
     userName: any;
     userId: any;
   }>>
-  selectedId: string;
   setSelectedId: React.Dispatch<React.SetStateAction<string>>;
   finishHobbie: (hobbyId: number) => Promise<void>;
+  setAddedWindow: React.Dispatch<React.SetStateAction<boolean>>;
+  hobbyList: IHobby[];
+  selectedId: string;
   isAdmin: boolean;
 }) {
 
@@ -33,11 +34,6 @@ export default function Hobbies(props: {
       userId: JSON.parse(document.cookie).id,
     })
     props.setSelectedId(hobbyId);
-  }
-
-  const addMovie = async () => {
-    const movieApi = new MovieAPI()
-    await movieApi.getMovie('Need for Speed', '4')
   }
 
   const finished = (hobby: IHobby) => hobby.finished ? 'hobbyContainer' : 'hobbyContainerCurrent'
@@ -56,7 +52,7 @@ export default function Hobbies(props: {
             <img src={end} alt='End icon' className='typeIcon' />
             <span>End current hobby</span>
           </button> : <button
-            onClick={addMovie}
+            onClick={() => props.setAddedWindow(true)}
           >
             <img src={add} alt='Add icon' className='typeIcon' />
             <span>Add new hobby</span>

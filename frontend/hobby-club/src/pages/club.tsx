@@ -9,6 +9,7 @@ import HobbyMessages from '../components/hobbiesMessages';
 import IHobby from '../interfaces/hobby.interface';
 import { IClubMessage } from '../interfaces/message.interface';
 import ClubMembers from '../components/clubMembers';
+import AddHobby from '../components/addHobby';
 
 export default function Club() {
 
@@ -21,6 +22,8 @@ export default function Club() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   const [rerender, setRerender] = useState(false);
+
+  const [addedWindow, setAddedWindow] = useState(false);
 
   const [hobbySelected, setHobbySelected] = useState({
     clubId: 0,
@@ -97,6 +100,7 @@ export default function Club() {
             setSelectedId={setSelectedId}
             finishHobbie={finishHobbie}
             isAdmin={isAdmin}
+            setAddedWindow={setAddedWindow}
           />}
         </div>
         <div className='messagesComponent'>
@@ -118,6 +122,9 @@ export default function Club() {
             userList={clubInfo.user}
           />}
         </div>
+      </div>
+      <div className={`${!addedWindow && 'noneWindow'} addHobbySection`}>
+        <AddHobby />
       </div>
     </div>
   )

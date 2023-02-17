@@ -1,7 +1,7 @@
 // import 'dotenv/config';
 
-export default class MovieAPI {
-  public getMovie = async (movieTitle: string, page: string='1') => {
+export default class ExternalAPI {
+  public getMovie = async (movieTitle: string, page: string='1', type: string) => {
     const options = {
       method: 'GET',
       headers: {
@@ -10,10 +10,9 @@ export default class MovieAPI {
       }
     };
 
-    const URL = `https://movie-database-alternative.p.rapidapi.com/?s=${movieTitle}&r=json&page=${page}`;
+    const URL = `https://movie-database-alternative.p.rapidapi.com/?s=${movieTitle}&r=json&type=${type}&page=${page}`;
     const response = await fetch(URL, options);
     const data = await response.json();
-    console.log(data)
     return data;
   }
 };
