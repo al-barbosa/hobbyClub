@@ -9,7 +9,7 @@ export default class HobbyService {
     const getMessages = await HobbyMessages.findAll({
       include: 'user',
       where: { hobby_id: id },
-      order: [['user', 'createdAt', 'DESC']]
+      order: [['user', 'createdAt', 'desc']]
     });
     searchedClub.messages = getMessages;
     return searchedClub;

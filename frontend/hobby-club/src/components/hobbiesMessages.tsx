@@ -86,7 +86,11 @@ export default function HobbyMessages(props: {
     <div>
       {props.hobbySelected?.messages ?
         <div className='hobbyMessageBody'>
-          {props.hobbySelected.messages.map((message, index) => <div
+          {props.hobbySelected.messages
+            .sort(function(a, b) {
+              return a.createdAt > b.createdAt ? 1 : 0;
+            })
+            .map((message, index) => <div
             key={index}
             className='hobbyMessage'
           >

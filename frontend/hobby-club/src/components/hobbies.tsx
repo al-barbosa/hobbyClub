@@ -6,7 +6,6 @@ import joystick from '../icons/joystick.png';
 import IHobby from "../interfaces/hobby.interface";
 import notFound from '../icons/notFound.png'
 import HobbyAPI from '../helper/HobbyAPI';
-import ClubAPI from '../helper/ClubAPI';
 
 export default function Hobbies(props: {
   hobbyList: IHobby[],
@@ -17,8 +16,9 @@ export default function Hobbies(props: {
     userId: any;
   }>>
   selectedId: string;
-  setSelectedId: React.Dispatch<React.SetStateAction<string>>
-  finishHobbie: (hobbyId: number) => Promise<void>
+  setSelectedId: React.Dispatch<React.SetStateAction<string>>;
+  finishHobbie: (hobbyId: number) => Promise<void>;
+  isAdmin: boolean;
 }) {
 
   const showMessages = async (hobbyId: string) => {
@@ -35,21 +35,17 @@ export default function Hobbies(props: {
 
   const finished = (hobby: IHobby) => hobby.finished ? 'hobbyContainer' : 'hobbyContainerCurrent'
   const selected = (hobby: IHobby) => `${hobby.id}` === props.selectedId ? 'selectedHobby' : ''
-  // const finishHobbie = async (hobbyId: number) => {
-  //   const clubApi = new ClubAPI();
-  //   await clubApi.endHobbie(props.clubId, hobbyId, JSON.parse(document.cookie).token);
-  // }
 
   return (
     <div id='hobbiesSection'>
       {props.hobbyList
         .map((hobby, index) => <div key={index}>
-          {!hobby.finished && <button
+          {props.isAdmin && (!hobby.finished && <button
             onClick={() => props.finishHobbie(hobby.id)}
           >
             <img src={end} alt='End icon' className='typeIcon' />
             <span>End current hobby</span>
-          </button>}
+          </button>)}
           <button
             key={index}
             className={`${finished(hobby)} ${selected(hobby)}`}

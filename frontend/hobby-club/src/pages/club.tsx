@@ -18,6 +18,8 @@ export default function Club() {
 
   const [isMember, setIsMember] = useState(false);
 
+  const [isAdmin, setIsAdmin] = useState(false);
+
   const [rerender, setRerender] = useState(false);
 
   const [hobbySelected, setHobbySelected] = useState({
@@ -62,13 +64,13 @@ export default function Club() {
 
       const userId = JSON.parse(document.cookie).id;
       const filteredList = (retrivedClubInfo as IClub).user.some((user) => user.id === userId);
-      if (filteredList) setIsMember(true)
+      if (filteredList) setIsMember(true);
+      if (userId === retrivedClubInfo.admin.id) setIsAdmin(true);
 
-      const retrivedMessages = await clubApi.getMessages(clubId)
-      setClubMessages(retrivedMessages)
+      const retrivedMessages = await clubApi.getMessages(clubId);
+      setClubMessages(retrivedMessages);
     }
     getClubInfo();
-    console.log('oi')
   }, [location.pathname, isMember, rerender]);
 
   return (
@@ -94,6 +96,7 @@ export default function Club() {
             selectedId={selectedId}
             setSelectedId={setSelectedId}
             finishHobbie={finishHobbie}
+            isAdmin={isAdmin}
           />}
         </div>
         <div className='messagesComponent'>
