@@ -1,11 +1,13 @@
 import '../styles/Hobbies.css';
 import book from '../icons/book.png';
-import end from '../icons/end.png'
+import end from '../icons/end.png';
+import add from '../icons/add.png';
 import camera from '../icons/camera.png';
 import joystick from '../icons/joystick.png';
 import IHobby from "../interfaces/hobby.interface";
 import notFound from '../icons/notFound.png'
 import HobbyAPI from '../helper/HobbyAPI';
+import MovieAPI from '../helper/ExternalAPI'; 
 
 export default function Hobbies(props: {
   hobbyList: IHobby[],
@@ -33,18 +35,31 @@ export default function Hobbies(props: {
     props.setSelectedId(hobbyId);
   }
 
+  const addMovie = async () => {
+    const movieApi = new MovieAPI()
+    await movieApi.getMovie('Need for Speed', '4')
+  }
+
   const finished = (hobby: IHobby) => hobby.finished ? 'hobbyContainer' : 'hobbyContainerCurrent'
   const selected = (hobby: IHobby) => `${hobby.id}` === props.selectedId ? 'selectedHobby' : ''
 
   return (
     <div id='hobbiesSection'>
       {props.hobbyList
-        .map((hobby, index) => <div key={index}>
-          {props.isAdmin && (!hobby.finished && <button
+        .map((hobby, index) => <div
+          className='hobbySideBox'
+          key={index}
+        >
+          {(props.isAdmin  && index === 0) && ((!hobby.finished) ? <button
             onClick={() => props.finishHobbie(hobby.id)}
           >
             <img src={end} alt='End icon' className='typeIcon' />
             <span>End current hobby</span>
+          </button> : <button
+            onClick={addMovie}
+          >
+            <img src={add} alt='Add icon' className='typeIcon' />
+            <span>Add new hobby</span>
           </button>)}
           <button
             key={index}

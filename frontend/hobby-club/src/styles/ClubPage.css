@@ -15,8 +15,12 @@
   position: fixed;
 }
 
-.messagesComponent{
+.messagesComponent {
   padding-left: 290px;
   padding-bottom: 20px;
-  width: 900px;
+  width: auto;
+}
+
+.membersList {
+  padding-right: 10px;
 }

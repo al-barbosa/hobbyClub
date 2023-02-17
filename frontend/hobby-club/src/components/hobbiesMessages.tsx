@@ -103,7 +103,7 @@ export default function HobbyMessages(props: {
               </NavLink>
               <span className='hobbyMessageDate'>{message.createdAt}</span>
             </div>
-            <span className='hobbyMessageBody'>{message.text}</span>
+            <span className='hobbyMessageText'>{message.text}</span>
           </div>)}
           {props.postedMeessage.message ?
           <div
@@ -118,7 +118,7 @@ export default function HobbyMessages(props: {
             </NavLink>
             <span className='hobbyMessageDate'>{`${new Date()}`}</span>
           </div>
-          <span className='hobbyMessageBody'>{props.postedMeessage.message}</span>
+          <span className='hobbyMessageText'>{props.postedMeessage.message}</span>
         </div> : (props.isMember && <div
             className='input-group'
           >
