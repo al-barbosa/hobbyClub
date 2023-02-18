@@ -3,6 +3,7 @@ export default interface IHobby {
   name: string,
   type: string,
   finished?: boolean,
+  img: string,
   created_at?: string,
   updated_at?: string,
 }

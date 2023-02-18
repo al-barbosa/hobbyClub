@@ -11,6 +11,7 @@ export default class HobbyValidation {
       type: Joi.string().required().messages({
         'string.empty': `Type is required`,
       }),
+      img: Joi.string(),
     }).validate(body);
   }
 };

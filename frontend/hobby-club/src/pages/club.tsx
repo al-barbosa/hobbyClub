@@ -124,7 +124,12 @@ export default function Club() {
         </div>
       </div>
       <div className={`${!addedWindow && 'noneWindow'} addHobbySection`}>
-        <AddHobby />
+        <AddHobby
+          clubId={clubInfo.id}
+          setAddedWindow={setAddedWindow}
+          setRerender={setRerender}
+          rerender={rerender}
+        />
       </div>
     </div>
   )

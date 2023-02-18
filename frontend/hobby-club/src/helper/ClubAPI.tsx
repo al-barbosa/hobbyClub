@@ -49,6 +49,33 @@ export default class ClubAPI {
     return data;
   }
 
+
+  public addHobbie = async (
+    name: string,
+    img: string,
+    type: string,
+    clubId: number,
+    token: string,
+  ) => {
+    const URL = `/club/${clubId}`;
+
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: JSON.stringify({
+        name,
+        img,
+        type
+      }),
+    });
+    const data = await response.json();
+    return data;
+  }
+
   public endHobbie = async (
     clubId: number,
     hobbieId: number,

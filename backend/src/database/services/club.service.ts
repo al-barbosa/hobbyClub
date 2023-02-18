@@ -24,7 +24,9 @@ export default class ClubService {
       include: [{ model: Users, as: 'admin' },
       { model: Hobbies, as: 'hobbies' },
       { model: Users, as: 'user' }],
+      order: [['hobbies', 'createdAt', 'desc']]
     });
+    console.log(searchedClub)
     if (!searchedClub) throw new ErrorHandler('Club not found', 404);
     return searchedClub;
   }
@@ -46,8 +48,8 @@ export default class ClubService {
     const error: ValidationResult = this.hobbyValidation.validateNewHobby(nHobby);
     if (error.error?.message) throw new ErrorHandler(error.error?.message, 404);
 
-    const { name, type } = nHobby;
-    const createdHobby = await Hobbies.create({ name, type, finished: false, clubId });
+    const { name, type, img } = nHobby;
+    const createdHobby = await Hobbies.create({ name, type, img, finished: false, clubId });
     return createdHobby;
   }
 

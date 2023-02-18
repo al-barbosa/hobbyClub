@@ -3,8 +3,14 @@ import { useState } from 'react'
 import ExternalAPI from '../helper/ExternalAPI';
 import IExternalApi from '../interfaces/externalApi.interface';
 import notFound from '../icons/notFound.png'
+import ClubAPI from '../helper/ClubAPI';
 
-export default function AddHobby() {
+export default function AddHobby(props: {
+  clubId: number
+  rerender: boolean
+  setAddedWindow: React.Dispatch<React.SetStateAction<boolean>>
+  setRerender: React.Dispatch<React.SetStateAction<boolean>>
+}) {
   
   const [searched, setSearched] = useState({
     search: '',
@@ -51,9 +57,24 @@ export default function AddHobby() {
   }
 
   const handleChangePage = async ({ target }: { target: { value: string } }) => {
+    setResults(([] as unknown) as IExternalApi)
     const { value } = target;
     const ans = await externalApi.getMovie(oldSearch.search, value, oldSearch.type);
     setResults(ans);
+  }
+
+  const handleAddHobbie = async (name: string, img: string, type: string) => {
+    const clubApi = new ClubAPI();
+    const ans = await clubApi.addHobbie(
+      name,
+      img,  
+      type,
+      props.clubId,
+      JSON.parse(document.cookie).token
+    )
+    console.log(ans)
+    props.setAddedWindow(false);
+    props.setRerender(!props.rerender);
   }
 
   return (
@@ -103,7 +124,10 @@ export default function AddHobby() {
             <span className='hobbyDate'>
               {`(${res.Year})`}
             </span>
-            <button className='selectHobbyBtn'>
+            <button
+              className='selectHobbyBtn'
+              onClick={() => handleAddHobbie(res.Title, res.Poster, res.Type)}
+            >
               Select hobby
             </button>
           </div>
