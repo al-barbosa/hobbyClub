@@ -7,7 +7,6 @@ import joystick from '../icons/joystick.png';
 import IHobby from "../interfaces/hobby.interface";
 import notFound from '../icons/notFound.png'
 import HobbyAPI from '../helper/HobbyAPI';
-import MovieAPI from '../helper/ExternalAPI'; 
 
 export default function Hobbies(props: {
   setHobbySelected: React.Dispatch<React.SetStateAction<IHobby>>,

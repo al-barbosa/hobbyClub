@@ -1,0 +1,26 @@
+.foundedHobbyContainer {
+  align-items: center;
+  display: flex;
+  justify-content: start;
+  width: 340px;
+  padding: 10px 10px 0px 10px;
+  gap: 10px;
+}
+
+.hobbyPoster {
+  width: 100px;
+  height: auto;
+}
+
+.hobbyInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.pageList {
+  display: flex;
+  font-size: x-large;
+  gap: 25px;
+  justify-content: center;
+  padding: 10px 0px;
+}
