@@ -33,7 +33,9 @@ class ClubService {
                 include: [{ model: models_1.Users, as: 'admin' },
                     { model: models_1.Hobbies, as: 'hobbies' },
                     { model: models_1.Users, as: 'user' }],
+                order: [['hobbies', 'createdAt', 'desc']]
             });
+            console.log(searchedClub);
             if (!searchedClub)
                 throw new ErrorHelper_1.default('Club not found', 404);
             return searchedClub;
@@ -57,8 +59,8 @@ class ClubService {
             const error = this.hobbyValidation.validateNewHobby(nHobby);
             if ((_c = error.error) === null || _c === void 0 ? void 0 : _c.message)
                 throw new ErrorHelper_1.default((_d = error.error) === null || _d === void 0 ? void 0 : _d.message, 404);
-            const { name, type } = nHobby;
-            const createdHobby = yield models_1.Hobbies.create({ name, type, finished: false, clubId });
+            const { name, type, img } = nHobby;
+            const createdHobby = yield models_1.Hobbies.create({ name, type, img, finished: false, clubId });
             return createdHobby;
         });
         this.finishHobbie = (clubId, hobbyId) => __awaiter(this, void 0, void 0, function* () {
