@@ -78,49 +78,51 @@ export default function Club() {
 
   return (
     <div>
-      <div className='clubHeaderComponent'>
-        {clubInfo.name &&
-          <Header
-            clubInfo={clubInfo}
-            setHobbySelected={setHobbySelected}
-            setSelectedId={setSelectedId}
-            isMember={isMember}
-            clubId={`${clubInfo.id}`}
-            setIsMember={setIsMember}
-        />}
-      </div>
-      <div className='clubBody'>
-        <div className='clubHobbiesComponent'>
-          {clubInfo.hobbies &&
-          <Hobbies
-            hobbyList={clubInfo.hobbies}
-            setHobbySelected={setHobbySelected}
-            setPostedMeessage={setPostedMeessage}
-            selectedId={selectedId}
-            setSelectedId={setSelectedId}
-            finishHobbie={finishHobbie}
-            isAdmin={isAdmin}
-            setAddedWindow={setAddedWindow}
+      <div className={`${addedWindow && 'mainClubPage'}`}>
+        <div className='clubHeaderComponent'>
+          {clubInfo.name &&
+            <Header
+              clubInfo={clubInfo}
+              setHobbySelected={setHobbySelected}
+              setSelectedId={setSelectedId}
+              isMember={isMember}
+              clubId={`${clubInfo.id}`}
+              setIsMember={setIsMember}
           />}
         </div>
-        <div className='messagesComponent'>
-          <HobbyMessages
-            hobbySelected={hobbySelected}
-            postedMeessage={postedMeessage}
-            setPostedMeessage={setPostedMeessage}
-            clubMessages={clubMessages}
-            setClubMessages={setClubMessages}
-            newMessage={newMessage}
-            setNewMessage={setNewMessage}
-            clubId={clubInfo.id}
-            isMember={isMember}
-          />
-        </div>
-        <div className='membersList'>
-          {clubInfo.user &&
-          <ClubMembers
-            userList={clubInfo.user}
-          />}
+        <div className='clubBody'>
+          <div className='clubHobbiesComponent'>
+            {clubInfo.hobbies &&
+            <Hobbies
+              hobbyList={clubInfo.hobbies}
+              setHobbySelected={setHobbySelected}
+              setPostedMeessage={setPostedMeessage}
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
+              finishHobbie={finishHobbie}
+              isAdmin={isAdmin}
+              setAddedWindow={setAddedWindow}
+            />}
+          </div>
+          <div className='messagesComponent'>
+            <HobbyMessages
+              hobbySelected={hobbySelected}
+              postedMeessage={postedMeessage}
+              setPostedMeessage={setPostedMeessage}
+              clubMessages={clubMessages}
+              setClubMessages={setClubMessages}
+              newMessage={newMessage}
+              setNewMessage={setNewMessage}
+              clubId={clubInfo.id}
+              isMember={isMember}
+            />
+          </div>
+          <div className='membersList'>
+            {clubInfo.user &&
+            <ClubMembers
+              userList={clubInfo.user}
+            />}
+          </div>
         </div>
       </div>
       <div className={`${!addedWindow && 'noneWindow'} addHobbySection`}>

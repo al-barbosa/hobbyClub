@@ -11,7 +11,7 @@ export default function AddHobby(props: {
   setAddedWindow: React.Dispatch<React.SetStateAction<boolean>>
   setRerender: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  
+
   const [searched, setSearched] = useState({
     search: '',
   });
@@ -45,7 +45,7 @@ export default function AddHobby(props: {
   const handleSearch = async () => {
     const ans = await externalApi.getMovie(searched.search, '1', type);
     const pageNumber = []
-    for (let i = 1; i <= Math.ceil(parseInt(ans.totalResults)/10); i++) {
+    for (let i = 1; i <= Math.ceil(parseInt(ans.totalResults) / 10); i++) {
       pageNumber.push(i);
     }
     setPages(pageNumber);
@@ -65,86 +65,109 @@ export default function AddHobby(props: {
 
   const handleAddHobbie = async (name: string, img: string, type: string) => {
     const clubApi = new ClubAPI();
-    const ans = await clubApi.addHobbie(
+    await clubApi.addHobbie(
       name,
-      img,  
+      img,
       type,
       props.clubId,
       JSON.parse(document.cookie).token
     )
-    console.log(ans)
     props.setAddedWindow(false);
     props.setRerender(!props.rerender);
+    setSearched({ search: '' });
+    setOldSearch({ search: '', type: 'game', });
+    setResults(([] as unknown) as IExternalApi);
+  }
+
+  const handleClose = () => {
+    props.setAddedWindow(false);
+    setSearched({ search: '' });
+    setOldSearch({ search: '', type: 'game', });
+    setResults(([] as unknown) as IExternalApi);
   }
 
   return (
-    <div>
-      <form>
-        <input
-          className='form-control'
-          type='text'
-          id='search'
-          name='search'
-          value={searched.search}
-          onChange={handleSearchName}
-        />
-        <button
-          type='button'
-          className='btn btn-primary btnClass'
-          id='searchBtn'
-          onClick={handleSearch}
+    <div className='searchPage'>
+      <form
+        className='searchFormContainer'
+      >
+        <div className='upForm'>
+          <input
+            className='form-control'
+            type='text'
+            id='search'
+            name='search'
+            value={searched.search}
+            onChange={handleSearchName}
+          />
+          <span
+            className='close'
+            onClick={handleClose}
+          >
+            &times;
+          </span>
+        </div>
+        <div
+          className='downForm'
         >
-          Search
-        </button>
-        <select
-          id='type'
-          name='type'
-          className='form-select'
-          onChange={handleSelect}
-        >
-          <option value='game'>Game</option>
-          <option value='movie'>Movie</option>
-        </select>
+          <select
+            id='type'
+            name='type'
+            className='form-select'
+            onChange={handleSelect}
+          >
+            <option value='game'>Game</option>
+            <option value='movie'>Movie</option>
+          </select>
+          <button
+            type='button'
+            className='btn btn-primary btnClass'
+            id='searchBtn'
+            onClick={handleSearch}
+          >
+            Search
+          </button>
+        </div>
       </form>
       <div className="foundedHobbies">
         {results.Search &&
-        results.Search.map((res, index) => <div
-          className='foundedHobbyContainer'
-          key={index}
-        >
-          <img
-            src={res.Poster === 'N/A' ? notFound : res.Poster}
-            alt={`${res.Title} poster`}
-            className='hobbyPoster'
-          />
-          <div className='hobbyInfo'>
-            <span className='hobbyName'>
-              {res.Title}
-            </span>
-            <span className='hobbyDate'>
-              {`(${res.Year})`}
-            </span>
-            <button
-              className='selectHobbyBtn'
-              onClick={() => handleAddHobbie(res.Title, res.Poster, res.Type)}
-            >
-              Select hobby
-            </button>
-          </div>
-        </div>)}
+          results.Search.map((res, index) => <div
+            className='foundedHobbyContainer'
+            key={index}
+          >
+            <img
+              src={res.Poster === 'N/A' ? notFound : res.Poster}
+              alt={`${res.Title} poster`}
+              className='hobbyPoster'
+            />
+            <div className='hobbyInfo'>
+              <span className='hobbyName'>
+                {res.Title}
+              </span>
+              <span className='hobbyDate'>
+                {`(${res.Year})`}
+              </span>
+              <button
+                className='selectHobbyBtn'
+                onClick={() => handleAddHobbie(res.Title, res.Poster, res.Type)}
+              >
+                Select hobby
+              </button>
+            </div>
+          </div>)}
         <div className="pageList">
           {(parseInt(results.totalResults) > 10) &&
-          pages.map((number, index) => <div
-          key={index}
-          className='pageNumber'
-          >
-            <button
-              value={number}
-              onClick={(e) => handleChangePage((e as unknown) as { target: { value: string; }; })}
+            pages.map((number, index) => <div
+              key={index}
+              className='pageNumber'
             >
-              {number}
-            </button>
-          </div> )}
+              <button
+                value={number}
+                onClick={(e) => handleChangePage((e as unknown) as { target: { value: string; }; })}
+              >
+                {number}
+              </button>
+            </div>)}
         </div>
       </div>
     </div>

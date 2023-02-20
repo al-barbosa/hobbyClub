@@ -1,3 +1,47 @@
+.searchPage {
+  
+  box-shadow: 5px 5px;
+  width: 500px;
+}
+
+.searchPage * {
+  background-color: #0442BF;
+}
+
+.searchFormContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px 0px 0px;
+}
+
+.close {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.upForm {
+  display: flex;
+}
+
+.downForm {
+  /* border: 1px black solid; */
+  display: flex;
+  flex-direction: row;
+  padding-left: 40px;
+  gap: 15px;
+}
+
+.form-select {
+  background-color: white;
+  width: 100px;
+}
+
 .foundedHobbyContainer {
   align-items: center;
   display: flex;
