@@ -4,7 +4,7 @@
   flex-direction: column;
   gap: 15px;
   padding: 5px 5px 80px 5px;
-  width: 275px;
+  /* width: 300px; */
   height: auto;
 }
 
@@ -23,7 +23,7 @@
   background-color: #1F4373;
   display: flex;
   justify-content: space-around;
-  width: 250px;
+  width: 260px;
 }
 
 .hobbyContainer * {
@@ -43,7 +43,7 @@
 }
 
 .nameSection {
-  align-items: start;
+  align-items: flex-start;
   display: flex;
   gap: 10px;
   justify-content: flex-start;

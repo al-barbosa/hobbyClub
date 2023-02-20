@@ -1,7 +1,7 @@
 .foundedHobbyContainer {
   align-items: center;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   width: 340px;
   padding: 10px 10px 0px 10px;
   gap: 10px;
