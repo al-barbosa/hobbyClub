@@ -52,3 +52,18 @@
 .typeIcon {
   height: 35px;
 }
+
+@media (max-width: 860px) {
+  .typeIcon {
+    height: 35px;
+  }
+
+  .hobbyName {
+    font-size: larger;
+  }
+
+  .hobbyCover {
+    height: 10px;
+    width: auto;
+  }
+}

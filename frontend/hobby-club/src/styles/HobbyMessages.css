@@ -23,3 +23,17 @@
   justify-content: space-between;
   padding: 0px 7px;
 }
+
+@media (max-width: 860px) {
+  /* .messageHeader {
+    font-size: xx-small;
+  }
+
+  .messageUserLink {
+    font-size: medium;
+  }
+  
+  .hobbyMessageBody {
+    font-size: small;
+  } */
+}

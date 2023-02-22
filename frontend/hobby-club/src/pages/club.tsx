@@ -1,6 +1,7 @@
 import '../styles/ClubPage.css'
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive'
 import Hobbies from '../components/hobbies';
 import Header from '../components/clubHeader';
 import ClubAPI from '../helper/ClubAPI';
@@ -10,6 +11,7 @@ import IHobby from '../interfaces/hobby.interface';
 import { IClubMessage } from '../interfaces/message.interface';
 import ClubMembers from '../components/clubMembers';
 import AddHobby from '../components/addHobby';
+import meeting from '../icons/meeting.png'
 
 export default function Club() {
 
@@ -34,7 +36,7 @@ export default function Club() {
     type: '',
     updatedAt: '',
     img: ''
-    } as IHobby);
+  } as IHobby);
 
   const [postedMeessage, setPostedMeessage] = useState({
     message: '',
@@ -48,6 +50,11 @@ export default function Club() {
     message: '',
     userId: JSON.parse(document.cookie).id
   });
+
+  const mediaQuery = useMediaQuery({
+    query: '(max-width: 860px)'
+  })
+
 
   const location = useLocation();
 
@@ -88,22 +95,33 @@ export default function Club() {
               isMember={isMember}
               clubId={`${clubInfo.id}`}
               setIsMember={setIsMember}
-          />}
+            />}
         </div>
         <div className='clubBody'>
-          <div className='clubHobbiesComponent'>
-            {clubInfo.hobbies &&
-            <Hobbies
-              hobbyList={clubInfo.hobbies}
-              setHobbySelected={setHobbySelected}
-              setPostedMeessage={setPostedMeessage}
-              selectedId={selectedId}
-              setSelectedId={setSelectedId}
-              finishHobbie={finishHobbie}
-              isAdmin={isAdmin}
-              setAddedWindow={setAddedWindow}
-            />}
+          {mediaQuery ?
+            <div className="dropdown">
+            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </button>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <button className="dropdown-item" type="button">Action</button>
+              <button className="dropdown-item" type="button">Another action</button>
+              <button className="dropdown-item" type="button">Something else here</button>
+            </div>
           </div>
+            : <div className='clubHobbiesComponent'>
+              {clubInfo.hobbies &&
+                <Hobbies
+                  hobbyList={clubInfo.hobbies}
+                  setHobbySelected={setHobbySelected}
+                  setPostedMeessage={setPostedMeessage}
+                  selectedId={selectedId}
+                  setSelectedId={setSelectedId}
+                  finishHobbie={finishHobbie}
+                  isAdmin={isAdmin}
+                  setAddedWindow={setAddedWindow}
+                />}
+            </div>}
           <div className='messagesComponent'>
             <HobbyMessages
               hobbySelected={hobbySelected}
@@ -119,9 +137,9 @@ export default function Club() {
           </div>
           <div className='membersList'>
             {clubInfo.user &&
-            <ClubMembers
-              userList={clubInfo.user}
-            />}
+              <ClubMembers
+                userList={clubInfo.user}
+              />}
           </div>
         </div>
       </div>
