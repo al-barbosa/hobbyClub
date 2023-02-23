@@ -54,6 +54,13 @@
 }
 
 @media (max-width: 860px) {
+  #hobbiesSection {
+    border: 2px rgba(0, 0, 0, 0.445) solid;
+    border-radius: 2%;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.445);
+    padding-top: 0px;
+  }
+
   .typeIcon {
     height: 35px;
   }

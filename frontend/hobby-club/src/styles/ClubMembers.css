@@ -17,3 +17,11 @@
 .clubMemberName {
   font-size: smaller;
 }
+
+@media (max-width: 860px) {
+  #membersSection {
+    border: 2px rgba(0, 0, 0, 0.445) solid;
+    border-radius: 2%;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.445);
+  }
+}

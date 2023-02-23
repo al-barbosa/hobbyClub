@@ -7,6 +7,7 @@ import joystick from '../icons/joystick.png';
 import IHobby from "../interfaces/hobby.interface";
 import notFound from '../icons/notFound.png'
 import HobbyAPI from '../helper/HobbyAPI';
+import { useMediaQuery } from 'react-responsive'
 
 export default function Hobbies(props: {
   setHobbySelected: React.Dispatch<React.SetStateAction<IHobby>>,
@@ -18,6 +19,7 @@ export default function Hobbies(props: {
   setSelectedId: React.Dispatch<React.SetStateAction<string>>;
   finishHobbie: (hobbyId: number) => Promise<void>;
   setAddedWindow: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowHobbies?: React.Dispatch<React.SetStateAction<boolean>>
   hobbyList: IHobby[];
   selectedId: string;
   isAdmin: boolean;
@@ -33,6 +35,15 @@ export default function Hobbies(props: {
       userId: JSON.parse(document.cookie).id,
     })
     props.setSelectedId(hobbyId);
+    if (props.setShowHobbies) props.setShowHobbies(false);
+  }
+
+  const mediaQuery = useMediaQuery({
+    query: '(max-width: 860px)'
+  })
+
+  const handleCloseHobbies = () => {
+    if (props.setShowHobbies) props.setShowHobbies(false);
   }
 
   const finished = (hobby: IHobby) => hobby.finished ? 'hobbyContainer' : 'hobbyContainerCurrent'
@@ -40,6 +51,12 @@ export default function Hobbies(props: {
 
   return (
     <div id='hobbiesSection'>
+      {mediaQuery && <span
+        className='close'
+        onClick={handleCloseHobbies}
+      >
+        &times;
+      </span>}
       {props.hobbyList
         .map((hobby, index) => <div
           className='hobbySideBox'

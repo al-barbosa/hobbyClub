@@ -11,7 +11,7 @@ import IHobby from '../interfaces/hobby.interface';
 import { IClubMessage } from '../interfaces/message.interface';
 import ClubMembers from '../components/clubMembers';
 import AddHobby from '../components/addHobby';
-import meeting from '../icons/meeting.png'
+// import meeting from '../icons/meeting.png'
 
 export default function Club() {
 
@@ -26,6 +26,10 @@ export default function Club() {
   const [rerender, setRerender] = useState(false);
 
   const [addedWindow, setAddedWindow] = useState(false);
+
+  const [showHobbies, setShowHobbies] = useState(false);
+
+  const [showMembers, setShowMembers] = useState(false);
 
   const [hobbySelected, setHobbySelected] = useState({
     clubId: 0,
@@ -54,6 +58,14 @@ export default function Club() {
   const mediaQuery = useMediaQuery({
     query: '(max-width: 860px)'
   })
+
+  const handleShowHobbies = () => {
+    setShowHobbies(true);
+  }
+
+  const handleShowMembers = () => {
+    setShowMembers(true);
+  }
 
 
   const location = useLocation();
@@ -98,18 +110,44 @@ export default function Club() {
             />}
         </div>
         <div className='clubBody'>
-          {mediaQuery ?
-            <div className="dropdown">
-            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
+          {mediaQuery &&
+          <div className='menuList'>
+            <button
+              onClick={handleShowHobbies}
+              className='menuBtn'
+            >
+              Hobbies
             </button>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button className="dropdown-item" type="button">Action</button>
-              <button className="dropdown-item" type="button">Another action</button>
-              <button className="dropdown-item" type="button">Something else here</button>
-            </div>
-          </div>
-            : <div className='clubHobbiesComponent'>
+            <button
+              onClick={handleShowMembers}
+              className='menuBtn'  
+            >
+              Members
+            </button>
+          </div>}
+          {(showHobbies && mediaQuery) &&
+            <div className='clubHobbiesComponent'>
+            {clubInfo.hobbies &&
+              <Hobbies
+                hobbyList={clubInfo.hobbies}
+                setHobbySelected={setHobbySelected}
+                setPostedMeessage={setPostedMeessage}
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
+                finishHobbie={finishHobbie}
+                isAdmin={isAdmin}
+                setAddedWindow={setAddedWindow}
+                setShowHobbies={setShowHobbies}
+              />}
+          </div>}
+          {(showMembers && mediaQuery) && <div className='membersList'>
+            {clubInfo.user &&
+              <ClubMembers
+                userList={clubInfo.user}
+                setShowMembers={setShowMembers}
+              />}
+          </div>}
+          {!mediaQuery && <div className='clubHobbiesComponent'>
               {clubInfo.hobbies &&
                 <Hobbies
                   hobbyList={clubInfo.hobbies}
@@ -135,12 +173,12 @@ export default function Club() {
               isMember={isMember}
             />
           </div>
-          <div className='membersList'>
+          {!mediaQuery && <div className='membersList'>
             {clubInfo.user &&
               <ClubMembers
                 userList={clubInfo.user}
               />}
-          </div>
+          </div>}
         </div>
       </div>
       <div className={`${!addedWindow && 'noneWindow'} addHobbySection`}>
