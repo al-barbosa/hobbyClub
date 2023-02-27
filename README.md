@@ -34,8 +34,8 @@ The _main_ folders on this side of the app are:
 ## Checklist for future features
 
 - [x] Add the message board
-- [ ] Render the list of club members
-- [ ] Create API and system to add new hobbies
+- [x] Render the list of club members
+- [x] Create API and system to add new hobbies
 - [ ] Add search engine
 - [ ] Allow direct message between users
 - [ ] Create system to add friends
