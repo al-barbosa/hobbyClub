@@ -1,18 +1,29 @@
-import '../styles/Login.css'
+import '../styles/Login.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, NavigateFunction } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import UserAPI from '../helper/UserAPI';
 
-export default function Login() {
+interface LoginInfo {
+  email: string;
+  password: string;
+}
+
+interface SignUpInfo {
+  email: string;
+  username: string;
+  password: string;
+}
+
+export default function Login(): JSX.Element {
   const userApi = new UserAPI();
   const navigate = useNavigate();
 
-  const [loginInfo, setLoginInfo] = useState({
+  const [loginInfo, setLoginInfo] = useState<LoginInfo>({
     email: '',
     password: '',
   });
 
-  const [signUpInfo, setSignUpInfo] = useState({
+  const [signUpInfo, setSignUpInfo] = useState<SignUpInfo>({
     email: '',
     username: '',
     password: '',
@@ -22,67 +33,57 @@ export default function Login() {
 
   const [signUp, setSignUp] = useState(false);
 
-  // const [passwordType, setPasswordType] = useState('password');
-
   const cleanLogin = (): void => {
     setLoginInfo({
       email: '',
       password: '',
-    })
-  }
+    });
+  };
 
-  const cleanSignIn = (): void => {
+  const cleanSignUp = (): void => {
     setSignUpInfo({
       email: '',
       username: '',
       password: '',
-    })
-  }
+    });
+  };
 
-  // const togglePassword = () => {
-  //   if (passwordType === "password") {
-  //     setPasswordType("text")
-  //     return;
-  //   }
-  //   setPasswordType("password")
-  // }
+  const eraseCookies = (): void => {
+    document.cookie = JSON.stringify({
+      email: '',
+      id: '',
+      token: '',
+      username: '',
+    });
+  };
 
-  const handleLoginInfo = ({ target }: { target: { name: string, value: string } }) => {
-    const { name, value } = target;
+  useEffect(() => {
+    eraseCookies();
+  }, []);
+
+  const handleLoginInfo = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
     setLoginInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
     }));
   };
 
-  const handleSignUpInfo = ({ target }: { target: { name: string, value: string } }) => {
-    const { name, value } = target;
+  const handleSignUpInfo = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
     setSignUpInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
     }));
   };
 
-  const eraseCookies = () => {
-    document.cookie = JSON.stringify({
-      email: '',
-      id: '',
-      token: '',
-      username: ''
-    })
-  }
-
-  useEffect(() => {
-    eraseCookies()
-  }, [])
-
-  const handleLogin = async (e: React.SyntheticEvent): Promise<NavigateFunction | void> => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const userInfo = await userApi.login(loginInfo.email, loginInfo.password);
     if (userInfo.message) {
       eraseCookies();
-      setErrorMessage(userInfo.message)
-    };
+      setErrorMessage(userInfo.message);
+    }
     if (userInfo.token) {
       setErrorMessage('');
       document.cookie = JSON.stringify(userInfo);
@@ -90,124 +91,104 @@ export default function Login() {
     }
   };
 
-  const handleSignUp = async (e: React.SyntheticEvent): Promise<NavigateFunction | void> => {
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const newUserInfo = await userApi.createUser(signUpInfo.email, signUpInfo.username, signUpInfo.password);
     if (newUserInfo.message) {
       eraseCookies();
-      setErrorMessage(newUserInfo.message)
-    };
+      setErrorMessage(newUserInfo.message);
+    }
     if (newUserInfo.token) {
       setErrorMessage('');
       document.cookie = JSON.stringify(newUserInfo);
       navigate(`/profile/${newUserInfo.id}`);
     }
-  }
+  };
 
-  const handleSetSignUp = (): void => {
+  const handleToggleSignUp = (): void => {
     setErrorMessage('');
     cleanLogin();
-    cleanSignIn();
-    setSignUp(!signUp);
-  }
+    cleanSignUp();
+    setSignUp((prevSignUp) => !prevSignUp);
+  };
+
+
 
   return (
-    !signUp ?
-      <div id="loginPage">
-        <form className="loginForm">
-          <h1>Welcome to the</h1>
-          <h1>HobbyClub</h1>
-          <label htmlFor="email">Email:</label>
-          <input
-            className='form-control'
-            type="text"
-            id="email"
-            name="email"
-            value={loginInfo.email}
-            onChange={handleLoginInfo}
-          />
-          <label htmlFor="password">Password:</label>
-          <input
-            className='form-control'
-            type='password'
-            id="password"
-            name="password"
-            value={loginInfo.password}
-            onChange={handleLoginInfo}
-          />
-          {errorMessage &&
-            <span id='errorMessage'>{errorMessage}</span>}
-          <div className="buttonsDiv">
-            <button
-              type="button"
-              className="btn btn-warning btnClass"
-              id="loginBtn"
-              onClick={handleLogin}
-            >
-              LogIn
-            </button>
-            <button
-              type="button"
-              className="btn btn-warning btnClass"
-              id="siginBtn"
-              onClick={handleSetSignUp}
-            >
-              SignIn
-            </button>
-          </div>
-        </form>
-      </div>
-      :
-      <div id="loginPage">
-        <form className="loginForm">
-          <label htmlFor="email">Email:</label>
-          <input
-            className='form-control'
-            type="text"
-            id="email"
-            name="email"
-            value={signUpInfo.email}
-            onChange={handleSignUpInfo}
-          />
-          <label htmlFor="username">Username:</label>
-          <input
-            className='form-control'
-            type="text"
-            id="username"
-            name="username"
-            value={signUpInfo.username}
-            onChange={handleSignUpInfo}
-          />
-          <label htmlFor="password">Password:</label>
-          <input
-            className='form-control'
-            type="text"
-            id="password"
-            name="password"
-            value={signUpInfo.password}
-            onChange={handleSignUpInfo}
-          />
-          {errorMessage &&
-            <span id='errorMessage'>{errorMessage}</span>}
-          <div className="buttonsDiv">
-            <button
-              type="button"
-              className="btn btn-warning btnClass"
-              id="loginBtn"
-              onClick={handleSignUp}
-            >
-              Create account
-            </button>
-            <button
-              type="button"
-              className="btn btn-warning btnClass"
-              id="siginBtn"
-              onClick={handleSetSignUp}
-            >
-              Back to login
-            </button>
-          </div>
-        </form>
-      </div>
-  )
+    <div id="loginPage">
+      <form className="loginForm" onSubmit={signUp ? handleSignUp : handleLogin}>
+        <h1>Welcome to HobbyClub</h1>
+        {signUp ? (
+          <>
+            <label htmlFor="email">Email:</label>
+            <input
+              className="form-control"
+              type="text"
+              id="email"
+              name="email"
+              value={signUpInfo.email}
+              onChange={handleSignUpInfo}
+            />
+            <label htmlFor="username">Username:</label>
+            <input
+              className="form-control"
+              type="text"
+              id="username"
+              name="username"
+              value={signUpInfo.username}
+              onChange={handleSignUpInfo}
+            />
+            <label htmlFor="password">Password:</label>
+            <input
+              className="form-control"
+              type="password"
+              id="password"
+              name="password"
+              value={signUpInfo.password}
+              onChange={handleSignUpInfo}
+            />
+            {errorMessage && <span id="errorMessage">{errorMessage}</span>}
+            <div className="buttonsDiv">
+              <button type="submit" className="btn btn-warning btnClass" id="createAccountBtn">
+                Create Account
+              </button>
+              <button type="button" className="btn btn-warning btnClass" id="backToLoginBtn" onClick={handleToggleSignUp}>
+                Back to Login
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <label htmlFor="email">Email:</label>
+            <input
+              className="form-control"
+              type="text"
+              id="email"
+              name="email"
+              value={loginInfo.email}
+              onChange={handleLoginInfo}
+            />
+            <label htmlFor="password">Password:</label>
+            <input
+              className="form-control"
+              type="password"
+              id="password"
+              name="password"
+              value={loginInfo.password}
+              onChange={handleLoginInfo}
+            />
+            {errorMessage && <span id="errorMessage">{errorMessage}</span>}
+            <div className="buttonsDiv">
+              <button type="submit" className="btn btn-warning btnClass" id="loginBtn">
+                Log In
+              </button>
+              <button type="button" className="btn btn-warning btnClass" id="signUpBtn" onClick={handleToggleSignUp}>
+                Sign Up
+              </button>
+            </div>
+          </>
+        )}
+      </form>
+    </div>
+  );
 }
