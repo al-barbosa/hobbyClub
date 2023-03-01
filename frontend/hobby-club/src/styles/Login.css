@@ -24,18 +24,14 @@
   border-radius: 5%;
 }
 
-.loginForm * {
-  background-color: #024059;
-}
-
-input[type="text"],
-textarea {
+.loginForm input[type="text"],
+.loginForm textarea {
   background-color: #bf6415;
 }
 
-input,
-select,
-textarea {
+.loginForm input,
+.loginForm select,
+.loginForm textarea {
   color: #d9ccc1;
   margin: 5px 20px 20px 20px;
 }
