@@ -10,7 +10,7 @@ The project establishes an environment that allows the creation of clubs, where 
 
 ## Backend
 
-The database was created using MongoDB, with the help of Sequelize through migrations and seed, the library was also used for CRUD information.
+The database was created using MySQL, with the help of Sequelize through migrations and seed, the library was also used for CRUD information.
 
 The _main_ folders on this side of the app are:
 - Migration, to create for Database
@@ -39,5 +39,5 @@ The _main_ folders on this side of the app are:
 - [ ] Add search engine
 - [ ] Allow direct message between users
 - [ ] Create system to add friends
-- [ ] Add system to vote for next hobbie
+- [ ] Add system to vote for next hobby
 - [ ] Create tests for the project
