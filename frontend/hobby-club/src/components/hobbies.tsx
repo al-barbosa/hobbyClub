@@ -1,53 +1,58 @@
-import '../styles/Hobbies.css';
-import book from '../icons/book.png';
-import end from '../icons/end.png';
-import add from '../icons/add.png';
-import camera from '../icons/camera.png';
-import joystick from '../icons/joystick.png';
+import React from "react";
+import { useMediaQuery } from "react-responsive";
 import IHobby from "../interfaces/hobby.interface";
-import notFound from '../icons/notFound.png'
-import HobbyAPI from '../helper/HobbyAPI';
-import { useMediaQuery } from 'react-responsive'
+import HobbyAPI from "../helper/HobbyAPI";
+import add from "../icons/add.png";
+import book from "../icons/book.png";
+import camera from "../icons/camera.png";
+import end from "../icons/end.png";
+import joystick from "../icons/joystick.png";
+import notFound from "../icons/notFound.png";
+import "../styles/Hobbies.css";
 
 export default function Hobbies(props: {
-  setHobbySelected: React.Dispatch<React.SetStateAction<IHobby>>,
-  setPostedMeessage: React.Dispatch<React.SetStateAction<{
-    message: string;
-    userName: any;
-    userId: any;
-  }>>
-  setSelectedId: React.Dispatch<React.SetStateAction<string>>;
-  finishHobbie: (hobbyId: number) => Promise<void>;
-  setAddedWindow: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowHobbies?: React.Dispatch<React.SetStateAction<boolean>>
   hobbyList: IHobby[];
-  selectedId: string;
   isAdmin: boolean;
+  selectedId: string;
+  setHobbySelected: React.Dispatch<React.SetStateAction<IHobby>>;
+  setPostedMessage: React.Dispatch<
+    React.SetStateAction<{
+      message: string;
+      userName: any;
+      userId: any;
+    }>
+  >;
+  setSelectedId: React.Dispatch<React.SetStateAction<string>>;
+  setAddedWindow: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowHobbies?: React.Dispatch<React.SetStateAction<boolean>>;
+  finishHobby: (hobbyId: number) => Promise<void>;
 }) {
 
   const showMessages = async (hobbyId: string) => {
     const hobbyApi = new HobbyAPI();
     const hobbyInfo = await hobbyApi.getHobby(hobbyId);
     props.setHobbySelected(hobbyInfo);
-    props.setPostedMeessage({
-      message: '',
+    props.setPostedMessage({
+      message: "",
       userName: JSON.parse(document.cookie).username,
       userId: JSON.parse(document.cookie).id,
-    })
+    });
     props.setSelectedId(hobbyId);
     if (props.setShowHobbies) props.setShowHobbies(false);
-  }
+  };
 
   const mediaQuery = useMediaQuery({
     query: '(max-width: 860px)'
-  })
+  });
 
   const handleCloseHobbies = () => {
     if (props.setShowHobbies) props.setShowHobbies(false);
-  }
+  };
 
-  const finished = (hobby: IHobby) => hobby.finished ? 'hobbyContainer' : 'hobbyContainerCurrent'
-  const selected = (hobby: IHobby) => `${hobby.id}` === props.selectedId ? 'selectedHobby' : ''
+  const finished = (hobby: IHobby) =>
+    hobby.finished ? "hobbyContainer" : "hobbyContainerCurrent";
+  const selected = (hobby: IHobby) =>
+    `${hobby.id}` === props.selectedId ? "selectedHobby" : "";
 
   return (
     <div id='hobbiesSection'>
@@ -63,7 +68,7 @@ export default function Hobbies(props: {
           key={index}
         >
           {(props.isAdmin  && index === 0) && ((!hobby.finished) ? <button
-            onClick={() => props.finishHobbie(hobby.id)}
+            onClick={() => props.finishHobby(hobby.id)}
           >
             <img src={end} alt='End icon' className='typeIcon' />
             <span>End current hobby</span>

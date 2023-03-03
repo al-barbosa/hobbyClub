@@ -24,6 +24,10 @@
   border-radius: 5%;
 }
 
+.loginForm * {
+  background-color: #024059;
+}
+
 .loginForm input[type="text"],
 .loginForm textarea {
   background-color: #bf6415;

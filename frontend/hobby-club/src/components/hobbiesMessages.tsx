@@ -82,6 +82,12 @@ export default function HobbyMessages(props: {
     })
   }
 
+  const formatDate = (date: string) => {
+    const dateObject = new Date(date);
+    const formattedDate = `${dateObject.getHours()}:${dateObject.getMinutes()} ${dateObject.getDate()}/${dateObject.getMonth() + 1}/${dateObject.getFullYear()}`;
+    return formattedDate;
+  };
+
   return (
     <div>
       {props.hobbySelected?.messages ?
@@ -101,7 +107,7 @@ export default function HobbyMessages(props: {
               >
                 <span className='hobbyMessageUser'>{message.user.username}</span>
               </NavLink>
-              <span className='hobbyMessageDate'>{message.createdAt}</span>
+              <span className='hobbyMessageDate'>{formatDate(message.createdAt)}</span>
             </div>
             <span className='hobbyMessageText'>{message.text}</span>
           </div>)}
@@ -116,7 +122,7 @@ export default function HobbyMessages(props: {
             >
               <span className='hobbyMessageUser'>{props.postedMeessage.userName}</span>
             </NavLink>
-            <span className='hobbyMessageDate'>{`${new Date()}`}</span>
+            <span className='hobbyMessageDate'>{formatDate(`${new Date()}`)}</span>
           </div>
           <span className='hobbyMessageText'>{props.postedMeessage.message}</span>
         </div> : (props.isMember && <div
@@ -153,7 +159,7 @@ export default function HobbyMessages(props: {
             >
               <span className='hobbyMessageUser'>{message.user.username}</span>
             </NavLink>
-            <span className='hobbyMessageDate'>{message.createdAt}</span>
+            <span className='hobbyMessageDate'>{formatDate(message.createdAt)}</span>
           </div>
           <span className='hobbyMessageBody'>{message.text}</span>
         </div>)}
@@ -168,7 +174,7 @@ export default function HobbyMessages(props: {
           >
             <span className='hobbyMessageUser'>{props.postedMeessage.userName}</span>
           </NavLink>
-          <span className='hobbyMessageDate'>{`${new Date()}`}</span>
+          <span className='hobbyMessageDate'>{formatDate(`${new Date()}`)}</span>
         </div>
         <span className='hobbyMessageBody'>{props.postedMeessage.message}</span>
       </div> : (props.isMember && <div
