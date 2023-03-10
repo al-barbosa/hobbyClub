@@ -2,9 +2,9 @@
 ## _The HUB for friends to discuss their hobbies_
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
-HobbyClub is a social networking project focused on sharing common hobbies. The idea is to simulate traditional Book Clubs in a virtual environment, where the group chooses a book to read and then gets together to talk about it.
+HobbyClub is a virtual hub for friends to discuss their hobbies. The platform is designed to simulate traditional book clubs, where a group chooses a book to read and then comes together to talk about it. However, HobbyClub is not limited to books. Users can create clubs based on any hobby, including games, movies, and more.
 
-The project establishes an environment that allows the creation of clubs, where users will be welcome to participate and choose an activity to discuss on the message board, it can be a game, a book or a movie. After the end of that activity, it will be closed, leaving the old discussion still available for consultation by users. Then a new hobby will be chosen.
+The platform enables users to create clubs, choose an activity to discuss on the message board, and have conversations about it. Once the activity ends, the discussion remains available for future reference, and a new hobby is chosen. We are continually working to enhance the platform's features, and a checklist of upcoming features can be found here.
 
 **_The project is still in development and a checklist of upcoming features can be found [here](##Checklist-for-future-features)._**
 
